@@ -1,0 +1,62 @@
+{
+  "name": "render-props-test",
+  "version": "0.1.0",
+  "description": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "style": "lib/render-props-test.css",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "build": "npm-run-all clean build:ts build:less",
+    "build:ts": "tsc -p tsconfig-build.json",
+    "build:less": "lessc --source-map styles/index.less render-props-test.css",
+    "bundle": "rm -rf docs/ && webpack --config webpack/bundle.ts",
+    "clean": "rm -rf lib/",
+    "start": "webpack-dev-server --config webpack/hot.ts",
+    "test": "npm-run-all build test:lint test:unit",
+    "test:circle": "npm-run-all build test:lint test:unit:circle",
+    "test:lint": "tslint --project tsconfig-build.json",
+    "test:unit": "mocha --opts test/mocha.opts 'test/*.ts'",
+    "test:unit:circle": "mocha --opts test/mocha.opts --reporter mocha-junit-reporter 'test/*.ts'",
+    "version": "npm run bundle && git add -A docs/"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/html-webpack-plugin": "^2.28.0",
+    "@types/mocha": "^2.2.43",
+    "@types/react": "^16.0.10",
+    "@types/react-dom": "^16.0.1",
+    "@types/react-hot-loader": "^3.0.4",
+    "@types/webpack": "^3.0.13",
+    "chai": "^4.1.2",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.5",
+    "html-loader": "^0.5.1",
+    "html-webpack-plugin": "^2.30.1",
+    "jsdom": "^11.3.0",
+    "jsdom-global": "^3.0.2",
+    "less": "^3.0.0-alpha.3",
+    "less-loader": "^4.0.5",
+    "mocha": "^4.0.1",
+    "mocha-junit-reporter": "^1.15.0",
+    "npm-run-all": "^4.1.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-hot-loader": "3.0.0",
+    "source-map-loader": "^0.2.2",
+    "style-loader": "^0.19.0",
+    "ts-loader": "^2.3.7",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.3",
+    "webpack": "^3.7.1",
+    "webpack-dev-server": "^2.9.1"
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "react": "^15.0.0 || ^16.0.0"
+  },
+  "keywords": [
+  ]
+}
