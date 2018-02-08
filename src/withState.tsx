@@ -1,6 +1,6 @@
-import { toMonad, MonadicComponent, Inner } from './MonadicComponent';
+import { toChainable, ChainableComponent, Inner } from './ChainableComponent';
 import * as React from 'react';
-import { ReactNode } from 'react';
+import { ReactNode, createFactory } from 'react';
 
 export type WithStateState<A> = {
   data: A
@@ -11,16 +11,13 @@ export type WithStateContext<A> = {
   update: (a: A) => void
 }
 
-function inner<A>(initialState: A, F: React.ComponentType<WithStateContext<A>>): React.SFC<any> {
-  console.log(`initializing withState with:${initialState}`);
+export function inner<A>(initialState: A, F: React.ComponentType<WithStateContext<A>>): React.ComponentType<any> {
+  console.log(`initializing withState with: ${initialState}`);
+
+  const factory = createFactory<WithStateContext<A>>(F as any);
   class WithState extends React.Component<{}, WithStateState<A>> {
     state: WithStateState<A> = {
       data: initialState
-    }
-
-    constructor() {
-      super({});
-      this.update = this.update.bind(this);
     }
 
     update(a: A) {
@@ -30,22 +27,32 @@ function inner<A>(initialState: A, F: React.ComponentType<WithStateContext<A>>):
     }
   
     render() {
-      return <F data={this.state.data} update={this.update}>{this.props.children}</F>;
+      return factory({
+        ...this.state,
+        update: this.update.bind(this)
+      });
     }
   };
 
-  return (props) => <WithState {...props} />;
+  return WithState;
+
+  // return (props) => (
+  //   <WithState initial={initialState as A}>
+  //     {(withStateContext: WithStateContext<A>) => (
+  //       <F {...withStateContext} />
+  //     )}
+  //   </WithState>
+  // );
 }
 
 // guh why can't ts infer this...
-export function withState<A>(a: A): MonadicComponent<WithStateContext<A>>{
-  return toMonad(inner as Inner<A, WithStateContext<A>>)(a);
+export function withState<A>(a: A): ChainableComponent<WithStateContext<A>> {
+  return toChainable(inner as Inner<A, WithStateContext<A>>)(a);
 }
-
 
 export type WithStateProps<A> = {
   initial: A,
-  children: (c: WithStateContext<A>) => ReactNode
+  children: (c: WithStateContext<A>) => Element
 }
 
 export class WithState<A> extends React.Component<WithStateProps<A>, WithStateState<A>> {

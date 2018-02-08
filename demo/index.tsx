@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import '../styles/index.less';
 
-import { Test, Test2, Test3 } from './Demo';
+import { Test, Test2, Test3, Test4, Test5, Test6, Test7, Test9 } from './Demo';
 import './demo.less';
 
 const APP_ELEMENT = document.getElementById('app')!;
@@ -17,9 +17,14 @@ const render = (Component: React.ComponentType<any>) => {
 };
 
 render(() => <div>
-  <Test />
-  <Test2 />
-  <Test3 />
+  {/* <Test />
+  <Test2 /> */}
+  {/* <Test3 /> */}
+  {/* <Test4 /> */}
+  {/* <Test5 /> */}
+  {/* <Test6 /> */}
+  {/* <Test7 /> */}
+  <Test9 />
 </div>);
 
 declare var module: any;

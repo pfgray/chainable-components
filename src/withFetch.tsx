@@ -1,4 +1,4 @@
-import { toMonad } from './ChainableComponent';
+import { toChainable } from './ChainableComponent';
 import * as React from 'react';
 
 export type User = {
@@ -18,7 +18,7 @@ function inner(url: string, F: React.ComponentType<User>): React.SFC<any> {
   class WithFetch extends React.Component<{}, WithFetchState> {
     state: WithFetchState = {
       loading: true
-    }
+    };
   
     componentDidMount() {
       setTimeout(() => {
@@ -42,4 +42,4 @@ function inner(url: string, F: React.ComponentType<User>): React.SFC<any> {
   return (props) => <WithFetch {...props} />;
 }
 
-export const withFetch = toMonad(inner)
+export const withFetch = toChainable(inner);
