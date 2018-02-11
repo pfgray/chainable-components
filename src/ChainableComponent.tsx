@@ -4,75 +4,38 @@ export type RenderPropsType<A, B> = A & {
   children: (b: B) => JSX.Element
 }
 
-export type Inner<A, B> = (a:A, F: React.ComponentType<B>) => React.ComponentType<any>
+export type Inner<P, B> = (p:P, F: React.ComponentType<B>) => React.ComponentType<any>;
 
 
-class ChainableComponentWrapper<A> implements ChainableComponent<A> {
-  inner: Inner<any, A>
-  b: any
-  constructor(b: any, inner: Inner<any, A>) {
-    this.inner = inner;
-    this.b = b
-  }
-  ap(f: React.ComponentType<A>): React.ComponentType<any> {
-    return this.inner(this.b, f);
-  }
-  apply(f: (a: A) => React.ReactNode): React.ComponentType<any> {
-    const g: any = f
-    return this.inner(this.b, (b: any) => g(b));
-  }
-  map<B>(f: (a: A) => B): ChainableComponent<B> {
-    const inner2: Inner<A, B> = (a2, G) => {
-      const composed = (a: A) => <G {...f(a)} />
-      return this.inner(a2, composed);
+// P is the configuration parameter to build a chainable component
+export function toChainable<P, A>(inner: Inner<P, A>): (p:P) => ChainableComponent<A> {
+  //return a => new ChainableComponentWrapper(a, inner);
+  return p => ({
+    ap(f: React.ComponentType<A>): React.ComponentType<any> {
+      return inner(p, f);
+    },
+    map<B>(f: (a: A) => B): ChainableComponent<B>{
+      const inner2: Inner<P, B> = (p2, G) => {
+        const composed = (a: A) => <G {...f(a)} />
+        return inner(p2, composed);
+      }
+      return toChainable(inner2)(p);
+    },
+    chain<B>(f: (a: A) => ChainableComponent<B>): ChainableComponent<B> {
+      const inner2: Inner<P, B> = (p2, G) => {
+        const composed = (a: A) => {
+          const Applied = f(a).ap(G);
+          return <Applied />;
+        };
+        return inner(p2, composed);
+      }
+      return toChainable(inner2)(p);
     }
-    return new ChainableComponentWrapper(this.b, inner2);
-  }
-  chain<B>(f: (a: A) => ChainableComponent<B>): ChainableComponent<B> {
-    const inner2: Inner<A, B> = (a2, G) => {
-      const composed = (a: A) => {
-        const Applied = f(a).ap(G);
-        return <Applied />
-      };
-      return this.inner(a2, composed)
-    }
-    return new ChainableComponentWrapper(this.b, inner2); // toChainable(inner2)(a);
-  }
-}
-
-export function toChainable<A, B>(inner: Inner<A, B>): (a:A) => ChainableComponent<B> {
-  return a => new ChainableComponentWrapper(a, inner);
-  // return a => ({
-  //   ap(f: React.ComponentType<B>): React.ComponentType<any> {
-  //     return inner(a, f);
-  //   },
-  //   apply(f: (b: B) => React.ReactNode): React.ComponentType<any> { // React.ReactNode): React.SFC<{}> {
-  //     const g: any = f
-  //     return inner(a, (b: B) => g(b));
-  //   },
-  //   map<C>(f: (b: B) => C): ChainableComponent<C>{
-  //     const inner2: Inner<A, C> = (a2, G) => {
-  //       const composed = (b:B) => <G {...f(b)} />
-  //       return inner(a2, composed);
-  //     }
-  //     return toChainable(inner2)(a);
-  //   },
-  //   chain<C>(f: (b: B) => ChainableComponent<C>): ChainableComponent<C>{
-  //     const inner2: Inner<A, C> = (a2, G) => {
-  //       const composed = (b: B) => {
-  //         const Applied = f(b).ap(G);
-  //         return <Applied />
-  //       };
-  //       return inner(a2, composed)
-  //     }
-  //     return toChainable(inner2)(a);
-  //   }
-  // })
+  });
 }
 
 export interface ChainableComponent<A> {
   ap(f: React.ComponentType<A>): React.ComponentType<any>; // it shouldn't be any, it should be void
-  apply(f: (a: A) => React.ReactNode): React.ComponentType<any>; // it shouldn't be any, it should be void
   map<B>(f: (a: A) => B): ChainableComponent<B>;
   chain<B>(f: (a: A) => ChainableComponent<B>): ChainableComponent<B>;
 }

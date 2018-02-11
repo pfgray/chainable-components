@@ -17,14 +17,7 @@ const render = (Component: React.ComponentType<any>) => {
 };
 
 render(() => <div>
-  {/* <Test />
-  <Test2 /> */}
-  {/* <Test3 /> */}
-  {/* <Test4 /> */}
-  {/* <Test5 /> */}
-  {/* <Test6 /> */}
-  {/* <Test7 /> */}
-  <Test9 />
+  <Test3 />
 </div>);
 
 declare var module: any;

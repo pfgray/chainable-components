@@ -20,6 +20,18 @@ export function inner<A>(initialState: A, F: React.ComponentType<WithStateContex
       data: initialState
     }
 
+    componentDidMount(){
+      console.log('Mounting new WithState... ');
+    }
+
+    componentWillUnmount(){
+      console.log('unmounting WithState... ', this.state);
+    }
+
+    componentWillReceiveProps(a, b){
+      console.log('receiving props...', a, b);
+    }
+
     update(a: A) {
       this.setState({
         data: a
@@ -27,6 +39,9 @@ export function inner<A>(initialState: A, F: React.ComponentType<WithStateContex
     }
   
     render() {
+      F.displayName = "Wrapped";
+      console.log('Rendering WithState.... ', F);
+      console.log('with props', F.defaultProps);
       return factory({
         ...this.state,
         update: this.update.bind(this)
