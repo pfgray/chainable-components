@@ -1,0 +1,10 @@
+.idea/
+.editorconfig
+.gitignore
+.npmignore
+circle.yml
+tsconfig*.json
+demo/
+docs/
+webpack/
+yarn.lock
