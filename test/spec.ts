@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-describe('Render Props Test', () => {
+describe('Chainable Components', () => {
   it('should be sane', () => {
     expect(true).to.equal(true);
   })

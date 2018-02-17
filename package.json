@@ -1,10 +1,9 @@
 {
-  "name": "render-props-test",
-  "version": "0.1.0",
+  "name": "chainable-components",
+  "version": "1.0.0",
   "description": "",
   "license": "MIT",
   "main": "lib/index.js",
-  "style": "lib/render-props-test.css",
   "typings": "lib/index.d.ts",
   "author": {
     "name" : "Paul Gray",
@@ -12,9 +11,8 @@
     "url" : "https://paulgray.net/"
   },
   "scripts": {
-    "build": "npm-run-all clean build:ts build:less",
+    "build": "npm-run-all clean build:less",
     "build:ts": "tsc -p tsconfig-build.json",
-    "build:less": "lessc --source-map styles/index.less render-props-test.css",
     "bundle": "rm -rf docs/ && webpack --config webpack/bundle.ts",
     "clean": "rm -rf lib/",
     "start": "webpack-dev-server --config webpack/hot.ts",

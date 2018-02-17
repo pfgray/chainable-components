@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { withState } from '../src/withState';
+import { withState } from '../src/lib/withState';
 
 export const Test3 =
   withState({initial: 0}).chain(outer => 
