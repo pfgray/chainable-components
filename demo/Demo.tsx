@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { buildChainable, RenderPropsComponent } from '../src/ChainableComponent';
 import { withState } from '../src/lib/withState';
 
 export const Test3 =
@@ -14,3 +15,41 @@ export const Test3 =
       <div>Inner: {inner.data} <button onClick={() => inner.update(inner.data + 1)}></button></div>
     </div>
   ));
+
+type Config = { n: string };
+
+const Wut: RenderPropsComponent<{}, User> = null as any;
+
+// function hmm () {
+//   return <Wut username="wut" age={3}>
+//     {s => <div>s.length</div>}
+//   </Wut>
+// }
+
+const wut = buildChainable(Wut);
+
+type Thing<A, B> = A & {
+  t: (b:B) => number
+};
+
+type User = {
+  username: string,
+  age: number
+};
+
+type SupplyUserProps = {
+  children: (u: User) => JSX.Element
+};
+
+class SupplyUser extends React.Component<SupplyUserProps, User> {
+  render() {
+    return this.props.children({
+      username: 'paul',
+      age:29
+    });
+  }
+}
+
+const supplyUser = buildChainable(SupplyUser);
+
+// supplyUser()

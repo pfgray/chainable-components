@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "noEmit": false,
-    "outDir": "lib",
+    "outDir": "dist",
     "rootDir": "src"
   },
   "exclude": [
     "demo",
     "docs",
-    "lib",
+    "dist",
     "node_modules",
     "test",
     "webpack"

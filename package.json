@@ -3,18 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "license": "MIT",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "author": {
     "name" : "Paul Gray",
     "email" : "pfbgray@gmail.com",
     "url" : "https://paulgray.net/"
   },
   "scripts": {
-    "build": "npm-run-all clean build:less",
+    "build": "npm-run-all clean build:ts",
     "build:ts": "tsc -p tsconfig-build.json",
     "bundle": "rm -rf docs/ && webpack --config webpack/bundle.ts",
-    "clean": "rm -rf lib/",
+    "clean": "rm -rf dist/",
     "start": "webpack-dev-server --config webpack/hot.ts",
     "test": "npm-run-all build test:lint test:unit",
     "test:circle": "npm-run-all build test:lint test:unit:circle",
