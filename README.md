@@ -31,12 +31,12 @@ const withTwoState =
 ### Converting a Render Prop component to a Chainable:
 Convert your existing Render Prop component to a chainable component with the `buildChainable` function:
 
-```
-const withPromise = buildChainable(WithPromise)
+```jsx
+const withPromise = buildChainable(WithPromise);
 ```
 
 `withState`  is now a function that takes a configuration object (which would have been props to the render prop function), and returns a chainable component:
-```
+```jsx
 const userChainable: ChainableComponent<User> = withPromise({get: () => fetchUser(1234)});
 ```
 
@@ -44,21 +44,21 @@ The `WithPromise`’ s render prop takes the result of the promise and applies i
 
 ### Rendering a Chainable Component:
 Since the ”wrapped” value’s type is  `User`, the `ap` method takes a function which takes a user, and returns the rendered output:
-```
+```jsx
 userChainable.ap(user => (
   <div>{user.id} - {user.username}</div>
 ));
 ```
 
 All together, this looks like:
-```
+```jsx
 withPromise({get: () => fetchUser(1234)})
   .ap(user => (
 	  <div>{user.id} - {user.username}</div>
   ))
 ```
 Which is actually quite similar to the render prop version:
-```
+```jsx
 <WithPromise get={() => fetchUser(1234)}>
   {user => (
     <div>{user.id} - {user.username}</div>
@@ -69,7 +69,7 @@ Why would we go through the trouble of converting a Render Prop to a Chainable C
 
 ### Mapping values inside a Chainable Component
 Suppose we didn’t care about any information about the user at all, only their role, because we wanted to display something to the user, but only if they were an admin. We could map the user value inside our hoc into a boolean, and then use the boolean when we actually apply the chainable component. For instance,
-```
+```jsx
 withPromise({get: () => fetchUser(1234)})
   .map(user => user.role === 'Administrator')
   .ap(isAdmin => (
@@ -85,7 +85,7 @@ Let’s suppose that you wanted to fetch the user, and when the user loaded, “
 
 Assuming we have a Render Prop component named `WithFetch`, we could do:
 
-```
+```jsx
 const fadeIn = buildChainable(FadeIn);
 
 withPromise({get: () => fetchUser(1234)})
