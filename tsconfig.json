@@ -16,7 +16,7 @@
   },
   "exclude": [
     "docs",
-    "dist",
+    "lib",
     "node_modules"
   ]
 }

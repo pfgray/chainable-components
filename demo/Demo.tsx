@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { buildChainable, RenderPropsComponent } from '../src/ChainableComponent';
+import { fromRenderProp, RenderPropsComponent } from '../src/ChainableComponent';
 import { withState } from '../src/lib/withState';
 
 export const Test3 =
@@ -26,7 +26,7 @@ const Wut: RenderPropsComponent<{}, User> = null as any;
 //   </Wut>
 // }
 
-const wut = buildChainable(Wut);
+const wut = fromRenderProp(Wut);
 
 type Thing<A, B> = A & {
   t: (b:B) => number
@@ -50,6 +50,6 @@ class SupplyUser extends React.Component<SupplyUserProps, User> {
   }
 }
 
-const supplyUser = buildChainable(SupplyUser);
+const supplyUser = fromRenderProp(SupplyUser);
 
 // supplyUser()

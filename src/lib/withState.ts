@@ -1,15 +1,24 @@
 import * as React from 'react';
-import { buildChainable, ChainableComponent, RenderPropsProps } from '../ChainableComponent';
+import { fromRenderProp, ChainableComponent, RenderPropsProps } from '../ChainableComponent';
 
+/**
+ * The state used by the WithState render prop.
+ */
 export type WithStateState<A> = {
   data: A
 };
 
+/**
+ * Stores the state value and provides a function that updates the state.
+ */
 export type WithStateContext<A> = {
   data: A,
   update: (a: A) => void
 };
 
+/**
+ * The options to pass 
+ */
 export type WithStateOptions<A> = {
   initial: A
 };
@@ -41,5 +50,5 @@ export class WithState<A> extends React.Component<WithStateProps<A>, WithStateSt
 }
 
 export function withState<A>(options: WithStateOptions<A>): ChainableComponent<WithStateContext<A>> {
-  return buildChainable<WithStateOptions<A>, WithStateContext<A>>(WithState)(options);
+  return fromRenderProp<WithStateOptions<A>, WithStateContext<A>>(WithState)(options);
 }

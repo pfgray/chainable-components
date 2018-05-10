@@ -54,7 +54,7 @@ All together, this looks like:
 ```jsx
 withPromise({get: () => fetchUser(1234)})
   .ap(user => (
-	  <div>{user.id} - {user.username}</div>
+    <div>{user.id} - {user.username}</div>
   ))
 ```
 Which is actually quite similar to the render prop version:
@@ -73,7 +73,7 @@ Suppose we didn’t care about any information about the user at all, only their
 withPromise({get: () => fetchUser(1234)})
   .map(user => user.role === 'Administrator')
   .ap(isAdmin => (
-	  isAdmin ? (<div>secret plans...</div>) :
+    isAdmin ? (<div>secret plans...</div>) :
       <div>Access denied!</div>
   ))
 ```

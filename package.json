@@ -3,18 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "author": {
-    "name" : "Paul Gray",
-    "email" : "pfbgray@gmail.com",
-    "url" : "https://paulgray.net/"
+    "name": "Paul Gray",
+    "email": "pfbgray@gmail.com",
+    "url": "https://paulgray.net/"
   },
   "scripts": {
     "build": "npm-run-all clean build:ts",
     "build:ts": "tsc -p tsconfig-build.json",
     "bundle": "rm -rf docs/ && webpack --config webpack/bundle.ts",
-    "clean": "rm -rf dist/",
+    "clean": "rm -rf lib/",
     "start": "webpack-dev-server --config webpack/hot.ts",
     "test": "npm-run-all build test:lint test:unit",
     "test:circle": "npm-run-all build test:lint test:unit:circle",
@@ -34,6 +34,7 @@
     "chai": "^4.1.2",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.5",
+    "formik": "^0.11.11",
     "html-loader": "^0.5.1",
     "html-webpack-plugin": "^2.30.1",
     "jsdom": "^11.3.0",
@@ -55,8 +56,7 @@
     "webpack": "^3.7.1",
     "webpack-dev-server": "^2.9.1"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0"
   },
