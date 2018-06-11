@@ -99,6 +99,8 @@ export function fromAp<A>(ap: (f: (a: A) => ReactNode) => ReactNode): ChainableC
   };
 }
 
+type CC<A> = ChainableComponent<A>;
+
 export const ChainableComponent = {
   /**
    * Wraps any value 'A' into a chainable component.
@@ -107,4 +109,25 @@ export const ChainableComponent = {
   of<A>(a: A): ChainableComponent<A> {
     return fromAp(f => f(a));
   }
+
 };
+
+export function all<T1, T2, T3, T4, T5, T6, T7, T8, T9>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>, CC<T8>, CC<T9>]): CC<[T1, T2, T3, T4, T5, T6, T7, T8, T9]>
+export function all<T1, T2, T3, T4, T5, T6, T7, T8>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>, CC<T8>]): CC<[T1, T2, T3, T4, T5, T6, T7, T8]>
+export function all<T1, T2, T3, T4, T5, T6, T7>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>]): CC<[T1, T2, T3, T4, T5, T6, T7]>
+export function all<T1, T2, T3, T4, T5, T6>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>]): CC<[T1, T2, T3, T4, T5, T6]>
+export function all<T1, T2, T3, T4, T5>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>]): CC<[T1, T2, T3, T4, T5]>
+export function all<T1, T2, T3, T4>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>]): CC<[T1, T2, T3, T4]>
+export function all<T1, T2, T3>(values: [CC<T1>, CC<T2>, CC<T3>]): CC<[T1, T2, T3]>
+export function all<T1, T2>(values: [CC<T1>, CC<T2>]): CC<[T1, T2]>
+export function all<T>(values: (CC<T>)[]): CC<T[]>
+export function all(values: CC<any>[]) {
+  return values.reduce((aggOp: CC<any[]>, aOp: CC<any>) =>
+    aggOp.chain((agg: any[]) => (
+      aOp.map(a => agg.concat([a]))
+    )
+  ), ChainableComponent.of([]));
+}
+
+
+// [].concat()

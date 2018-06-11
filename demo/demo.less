@@ -2,5 +2,41 @@ html, body, #app {
   margin: 0;
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#app {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.step {
+  border: 1px solid #ddd;
+  margin-top: 2rem;
+  border-radius: 4px;
+  &:last-child {
+    margin-bottom: 5rem;
+  }
+  .step-header {
+    background-color: #eee;
+    margin: 0;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+  }
+  .step-body {
+    padding: 0.5rem;
+    padding-top: 0.5rem;
+  }
+  .code-sample {
+    font-family: 'Operator Mono', 'Courier New', Courier, monospace;
+    padding: 1rem;
+    overflow-x: auto;
+    background-color: #555;
+    color: #fff; 
+  }
+}
+
+pre {
+  font-family: monospace;
 }

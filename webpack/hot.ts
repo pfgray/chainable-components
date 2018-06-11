@@ -20,7 +20,7 @@ const entry = {
   ],
 };
 
-const rules = (config.module as webpack.NewModule).rules.map((loaderConf: any) => {
+const rules = (config.module as any).rules.map((loaderConf: any) => {
   if (loaderConf.test.test('test.ts')) {
     return {
       ...loaderConf,

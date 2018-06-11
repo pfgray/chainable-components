@@ -5,14 +5,14 @@ import { fromRenderProp, ChainableComponent, RenderPropsProps } from '../Chainab
  * The state used by the WithState render prop.
  */
 export type WithStateState<A> = {
-  data: A
+  value: A
 };
 
 /**
  * Stores the state value and provides a function that updates the state.
  */
 export type WithStateContext<A> = {
-  data: A,
+  value: A,
   update: (a: A) => void
 };
 
@@ -27,7 +27,7 @@ export type WithStateProps<A> = RenderPropsProps<WithStateOptions<A>, WithStateC
 
 export class WithState<A> extends React.Component<WithStateProps<A>, WithStateState<A>> {
   state: WithStateState<A> = {
-    data: this.props.initial
+    value: this.props.initial
   };
 
   constructor(props: WithStateProps<A>) {
@@ -37,13 +37,13 @@ export class WithState<A> extends React.Component<WithStateProps<A>, WithStateSt
 
   update(a: A) {
     this.setState({
-      data: a
+      value: a
     });
   }
 
   render() {
     return this.props.children({
-      data: this.state.data,
+      value: this.state.value,
       update: this.update
     });
   }

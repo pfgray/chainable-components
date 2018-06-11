@@ -73,10 +73,6 @@ const config: webpack.Configuration = {
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity,
-    }),
     new HtmlWebpackPlugin({
       template: CONSTANTS.HTML_TEMPLATE,
       chunksSortMode: 'dependency',

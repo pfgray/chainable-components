@@ -3,8 +3,9 @@ import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import '../styles/index.less';
 
-import { Test3 } from './Demo';
 import './demo.less';
+
+const Demos = require.context('./', false, /\.*Demo\.tsx$/);
 
 const APP_ELEMENT = document.getElementById('app')!;
 const render = (Component: React.ComponentType<any>) => {
@@ -17,7 +18,9 @@ const render = (Component: React.ComponentType<any>) => {
 };
 
 render(() => <div>
-  {Test3}
+  {Demos.keys().map(key => Demos(key)).map((Comp, i) => {
+    return <Comp.default key={i}/>;
+  })}
 </div>);
 
 declare var module: any;

@@ -12,7 +12,8 @@
     "noUnusedParameters": true,
     "target": "es5",
     "sourceMap": true,
-    "strict": true
+    "strict": true,
+    "skipLibCheck": true
   },
   "exclude": [
     "docs",

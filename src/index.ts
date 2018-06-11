@@ -3,7 +3,8 @@ import {
   RenderPropsProps,
   RenderPropsComponent,
   fromRenderProp,
-  fromAp
+  fromAp,
+  all,
 } from './ChainableComponent';
 import { withState, WithState } from './lib/withState';
 import { withPromise, WithPromise } from './lib/withPromise';
@@ -14,6 +15,7 @@ export {
   RenderPropsComponent,
   fromRenderProp,
   fromAp,
+  all,
   withState, WithState,
   withPromise, WithPromise,
 };
