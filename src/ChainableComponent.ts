@@ -1,4 +1,5 @@
 import { createFactory, ReactNode } from 'react';
+import { Lazy } from './lib/lazy';
 
 // export type ComponentLike<P = {}> = React.ComponentClass<P, any> | React.StatelessComponent<P>;
 
@@ -112,6 +113,9 @@ export const ChainableComponent = {
 
 };
 
+// TODO: all and Do are not specific to Chainable Components, but rather all Monads
+// how can we share the implementations of these methods without HKTs?
+
 export function all<T1, T2, T3, T4, T5, T6, T7, T8, T9>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>, CC<T8>, CC<T9>]): CC<[T1, T2, T3, T4, T5, T6, T7, T8, T9]>
 export function all<T1, T2, T3, T4, T5, T6, T7, T8>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>, CC<T8>]): CC<[T1, T2, T3, T4, T5, T6, T7, T8]>
 export function all<T1, T2, T3, T4, T5, T6, T7>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>]): CC<[T1, T2, T3, T4, T5, T6, T7]>
@@ -129,5 +133,43 @@ export function all(values: CC<any>[]) {
   ), ChainableComponent.of([]));
 }
 
+export function Do<A>(f: () => Iterator<any>): ChainableComponent<any> {
+  const gen = f();
+  // const agg: ChainableComponent<A[]> = ChainableComponent.of([]);
+  function doRec(i: number, cache: any[], v = undefined): ChainableComponent<A[]> {
+    // generate a new generator, then compute to the ith element,
 
-// [].concat()
+    //const context = gen.next(v);
+
+    const context = hmm(f(), undefined, i);
+    
+    console.log('Computed:', context)
+    // var context = null;
+    // if(cache[i]){
+    //   context = cache[i];
+    //   console.log('using cached value', context);
+    // } else {
+    //   context = gen.next(v);
+    //   console.log('generated new value', context);
+    //   cache[i] = context;
+    // }
+    
+    return context.done ? ChainableComponent.of(context.value) : context.value.chain((v: any) => doRec(i + 1, cache, v));
+  }
+
+  // 
+  return doRec(0, []);
+}
+
+function hmm(it: Iterator<any>, prev: any, i: number): IteratorResult<any> {
+  console.log('computing the: ', i, 'th number')
+  if(i === 0) {
+    const wut = it.next(prev);
+    console.log('resolved:', wut);
+    return wut;
+  } else {
+    const context = it.next(prev);
+    //return context.value.chain((v: any) => hmm(it, v, i - 1));
+    return hmm(it, context.value.chain((v: any) => ) )
+  }
+}
