@@ -1,11 +1,10 @@
 import * as webpack from 'webpack';
 import config from './base';
 import { CONSTANTS } from './constants';
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const baseEntry = config.entry as webpack.Entry;
-const entry = {
-  ...baseEntry,
-  app: [
+const entry = [
     // activate HMR for React
     'react-hot-loader/patch',
 
@@ -16,9 +15,8 @@ const entry = {
     // bundle the client for hot reloading
     // only- means to only hot reload for successful updates
     'webpack/hot/only-dev-server',
-    baseEntry.app as string,
-  ],
-};
+    baseEntry,
+  ];
 
 const rules = (config.module as any).rules.map((loaderConf: any) => {
   if (loaderConf.test.test('test.ts')) {
@@ -45,6 +43,9 @@ const plugins = [
     'process.env.NODE_ENV': 'null',
   }),
   new webpack.HotModuleReplacementPlugin(),
+  new HtmlWebpackPlugin({
+    title: '🔗-able Components'
+  })
 ];
 
 const hotConfig = {
@@ -53,6 +54,7 @@ const hotConfig = {
   module,
   plugins,
   devtool: '#cheap-module-source-map',
+  mode: 'development',
   devServer: {
     contentBase: CONSTANTS.DOCS_DIR,
     historyApiFallback: true,
