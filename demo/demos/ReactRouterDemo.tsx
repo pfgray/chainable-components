@@ -1,7 +1,7 @@
 import * as React from 'react';;
 import { Route, Router } from 'react-router';
-import { fromRenderProp } from '../src/ChainableComponent';
-import Step from './Step';
+import { fromRenderProp } from '../../src/ChainableComponent';
+import Step from '../Step';
 import createBrowserHistory from 'history/createBrowserHistory';
 
 const customHistory = createBrowserHistory();

@@ -3,10 +3,9 @@ import { CONSTANTS } from './constants';
 
 // tslint:disable-next-line no-var-requires
 
+console.log('wuuut:', CONSTANTS.APP_ENTRY);
 const config: webpack.Configuration = {
-  entry: {
-    'chainable-components': CONSTANTS.APP_ENTRY
-  },
+  entry: CONSTANTS.APP_ENTRY,
   output: {
     filename: 'chainable-components.js',
     path: CONSTANTS.DOCS_DIR,

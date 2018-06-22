@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { withState } from '../src/lib/withState';
-import { all } from '../src/ChainableComponent';
-import Step from './Step';
+import { withState } from '../../src/lib/withState';
+import { all } from '../../src/ChainableComponent';
+import Step from '../Step';
 
 export const WithStateDemo =
   all([

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { fromRenderProp } from '../src/ChainableComponent';
+import { fromRenderProp } from '../../src/ChainableComponent';
 // how to create a context hoc?
-import Step from './Step';
+import Step from '../Step';
 const { Consumer, Provider } = React.createContext("Default Value");
 
 const withContext = fromRenderProp(Consumer);

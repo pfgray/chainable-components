@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { withState } from '../src/lib/withState';
-import Step from './Step';
+import { withState } from '../../src/lib/withState';
+import Step from '../Step';
 // import { all } from '../src/ChainableComponent';
 
 export const WithStateDemo =
@@ -8,8 +8,7 @@ export const WithStateDemo =
     withState({ initial: 16 }).map(inner =>
       ({ inner, outer })
     )
-  )
-    .ap(({ inner, outer }) => (
+  ).ap(({ inner, outer }) => (
       <div>
         <div>Outer: {outer.value} <button onClick={() => outer.update(outer.value + 1)}>+</button></div>
         <div>Inner: {inner.value} <button onClick={() => inner.update(inner.value + 1)}>+</button></div>
