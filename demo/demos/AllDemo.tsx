@@ -3,7 +3,7 @@ import { withState } from '../../src/lib/withState';
 import { all } from '../../src/ChainableComponent';
 import Step from '../Step';
 
-export const WithStateDemo =
+export const AllDemo =
   all([
     withState({initial: 'string value'}),
     withState({initial: 1}),
@@ -12,7 +12,7 @@ export const WithStateDemo =
     withState({initial: 5}),
     withState({initial: 8})
   ])
-  .ap(([a, b, c, d, e, f]) => (
+  .render(([a, b, c, d, e, f]) => (
     <div>
       {/* a.value is inferred as a string */}
       <div>a: {a.value} <button onClick={() => a.update(a.value + 1)}>+</button></div>
@@ -39,7 +39,7 @@ all([
   withState({initial: 5}),
   withState({initial: 8})
 ])
-.ap(([a, b, c, d, e, f]) => (
+.render(([a, b, c, d, e, f]) => (
   <div>
     {/* a.value is inferred as a string */}
     <div>a: {a.value} <button onClick={() => a.update(a.value + 1)}>+</button></div>
@@ -53,7 +53,7 @@ all([
   </div>
 ));`}
     </pre>
-    {WithStateDemo}
+    {AllDemo}
   </Step>
 );
   

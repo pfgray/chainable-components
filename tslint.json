@@ -5,7 +5,9 @@
   ],
   "jsRules": {},
   "rules": {
+    "interface-over-type-literal": false,
     "array-type": false,
+    "arrow-parens": false,
     "interface-name": {
       "options": "never-prefix"
     },

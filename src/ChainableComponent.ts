@@ -1,21 +1,19 @@
 import { createFactory, ReactNode } from 'react';
 
-// export type ComponentLike<P = {}> = React.ComponentClass<P, any> | React.StatelessComponent<P>;
-
 /**
  * A composable wrapper around React effects.
- * 
+ *
  */
 export type ChainableComponent<A> = {
 
   /**
    * Renders this chainable into a ReactNode, which can be embedded inside the render
    * method of another component.
-   * @param f A function which is used to render the contextual value. 
+   * @param f A function which is used to render the contextual value.
    *          This method returns another ReactNode, possibly wrapped with
    *          additional functionality.
    */
-  ap(f: (a: A) => ReactNode): ReactNode;
+  render(f: (a: A) => ReactNode): ReactNode;
 
   /**
    * Converts the value inside this Chainable Component.
@@ -38,7 +36,7 @@ export type ChainableComponent<A> = {
  * @type A represents the type of the contextual value of the Render Props component.
  */
 export type RenderPropsProps<P, A> = P & {
-  children: (a: A) => ReactNode
+  children: (a: A) => ReactNode,
 };
 
 /**
@@ -54,11 +52,11 @@ export type RenderPropsComponent<P, A> = React.ComponentType<RenderPropsProps<P,
 type Applied<A> = (f: (a: A) => ReactNode) => ReactNode;
 
 export function fromRenderProp<P extends object, A>(Inner: RenderPropsComponent<P, A>): (p: P) => ChainableComponent<A> {
-  return p => fromAp(f => {
+  return p => fromRender(f => {
     const apply = createFactory<RenderPropsProps<P, A>>(Inner as any);
     return apply({
       ...(p as any), // todo: we have any until https://github.com/Microsoft/TypeScript/pull/13288 is merged
-      children: f
+      children: f,
     });
   });
 }
@@ -70,32 +68,32 @@ export function fromRenderProp<P extends object, A>(Inner: RenderPropsComponent<
  */
 export function fromNonStandardRenderProp<P extends object, A>(
   renderMethod: string,
-  Inner: React.ComponentClass<P & {[render: string]: (a:A) => ReactNode}>
+  Inner: React.ComponentClass<P & { [render: string]: (a: A) => ReactNode }>,
 ): (p: P) => ChainableComponent<A> {
-  return p => fromAp(f => {
-    const apply = createFactory<P & {[renderMethod: string]: (a:A) => ReactNode}>(Inner);
+  return p => fromRender(f => {
+    const apply = createFactory<P & { [renderMethod: string]: (a: A) => ReactNode }>(Inner);
     return apply({
       ...(p as any),
-      [renderMethod]: f
+      [renderMethod]: f,
     });
   });
 }
 
 /**
  * Converts an apply function to a ChainableComponent
- * @param ap
+ * @param render
  */
-export function fromAp<A>(ap: (f: (a: A) => ReactNode) => ReactNode): ChainableComponent<A> {
+export function fromRender<A>(render: (f: (a: A) => ReactNode) => ReactNode): ChainableComponent<A> {
   return {
-    ap,
+    render,
     map<B>(f: (a: A) => B): ChainableComponent<B> {
-      const Mapped: Applied<B> = g => this.ap(a => g(f(a)));
-      return fromAp(Mapped);
+      const Mapped: Applied<B> = g => this.render(a => g(f(a)));
+      return fromRender(Mapped);
     },
     chain<B>(f: (a: A) => ChainableComponent<B>): ChainableComponent<B> {
-      const FlatMapped: Applied<B> = g => this.ap(a => f(a).ap(g));
-      return fromAp(FlatMapped);
-    }
+      const FlatMapped: Applied<B> = g => this.render(a => f(a).render(g));
+      return fromRender(FlatMapped);
+    },
   };
 }
 
@@ -107,27 +105,25 @@ export const ChainableComponent = {
    * @param a the value that provides the context.
    */
   of<A>(a: A): ChainableComponent<A> {
-    return fromAp(f => f(a));
-  }
+    return fromRender(f => f(a));
+  },
 
 };
 
-export function all<T1, T2, T3, T4, T5, T6, T7, T8, T9>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>, CC<T8>, CC<T9>]): CC<[T1, T2, T3, T4, T5, T6, T7, T8, T9]>
-export function all<T1, T2, T3, T4, T5, T6, T7, T8>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>, CC<T8>]): CC<[T1, T2, T3, T4, T5, T6, T7, T8]>
-export function all<T1, T2, T3, T4, T5, T6, T7>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>]): CC<[T1, T2, T3, T4, T5, T6, T7]>
-export function all<T1, T2, T3, T4, T5, T6>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>]): CC<[T1, T2, T3, T4, T5, T6]>
-export function all<T1, T2, T3, T4, T5>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>]): CC<[T1, T2, T3, T4, T5]>
-export function all<T1, T2, T3, T4>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>]): CC<[T1, T2, T3, T4]>
-export function all<T1, T2, T3>(values: [CC<T1>, CC<T2>, CC<T3>]): CC<[T1, T2, T3]>
-export function all<T1, T2>(values: [CC<T1>, CC<T2>]): CC<[T1, T2]>
-export function all<T>(values: (CC<T>)[]): CC<T[]>
+export function all<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
+  values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>, CC<T8>, CC<T9>]): CC<[T1, T2, T3, T4, T5, T6, T7, T8, T9]>;
+export function all<T1, T2, T3, T4, T5, T6, T7, T8>(
+  values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>, CC<T8>]): CC<[T1, T2, T3, T4, T5, T6, T7, T8]>;
+export function all<T1, T2, T3, T4, T5, T6, T7>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>, CC<T7>]): CC<[T1, T2, T3, T4, T5, T6, T7]>;
+export function all<T1, T2, T3, T4, T5, T6>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>, CC<T6>]): CC<[T1, T2, T3, T4, T5, T6]>;
+export function all<T1, T2, T3, T4, T5>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>, CC<T5>]): CC<[T1, T2, T3, T4, T5]>;
+export function all<T1, T2, T3, T4>(values: [CC<T1>, CC<T2>, CC<T3>, CC<T4>]): CC<[T1, T2, T3, T4]>;
+export function all<T1, T2, T3>(values: [CC<T1>, CC<T2>, CC<T3>]): CC<[T1, T2, T3]>;
+export function all<T1, T2>(values: [CC<T1>, CC<T2>]): CC<[T1, T2]>;
+export function all<T>(values: (CC<T>)[]): CC<T[]>;
 export function all(values: CC<any>[]) {
   return values.reduce((aggOp: CC<any[]>, aOp: CC<any>) =>
     aggOp.chain((agg: any[]) => (
       aOp.map(a => agg.concat([a]))
-    )
-  ), ChainableComponent.of([]));
+    )), ChainableComponent.of([]));
 }
-
-
-// [].concat()

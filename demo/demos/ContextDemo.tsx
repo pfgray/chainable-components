@@ -7,7 +7,7 @@ const { Consumer, Provider } = React.createContext("Default Value");
 const withContext = fromRenderProp(Consumer);
 
 const DisplayContext =
-  withContext({ children: () => 'hmm, this should be necessary' }).ap(
+  withContext({ children: () => 'hmm, this should be necessary' }).render(
     context => {
       return (
         <span>
@@ -35,7 +35,7 @@ const { Consumer, Provider } = React.createContext("Default Value");
 const withStringContext = fromRenderProp(Consumer);
 
 const DisplayContext =
-withStringContext({ children: a => '' }).ap(
+withStringContext({ children: a => '' }).render(
   context => {
     return (
       <span>
