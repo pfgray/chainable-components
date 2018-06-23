@@ -29,9 +29,9 @@ export const AllDemo =
 export default () => (
   <Step title="all Demo">
     <pre className='code-sample'>
-      {`import { withState, all } from 'chainable-components';
+      {`import { withState, ChainableComponent } from 'chainable-components';
 
-all([
+ChainableComponent.all([
   withState({initial: 'string value'}),
   withState({initial: 1}),
   withState({initial: 2}),

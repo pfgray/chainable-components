@@ -97,7 +97,7 @@ export function fromRender<A>(render: (f: (a: A) => ReactNode) => ReactNode): Ch
       return fromRender(Mapped);
     },
     ap<B>(c: ChainableComponent<(a: A) => B>): ChainableComponent<B> {
-      const Apped: Applied<B> = g => this.render(a => c.render(f => g(f(a))))
+      const Apped: Applied<B> = g => this.render(a => c.render(f => g(f(a))));
       return fromRender(Apped);
     },
     chain<B>(f: (a: A) => ChainableComponent<B>): ChainableComponent<B> {
@@ -137,6 +137,5 @@ export const ChainableComponent = {
   of<A>(a: A): ChainableComponent<A> {
     return fromRender(f => f(a));
   },
-  all
+  all,
 };
-

@@ -12,6 +12,7 @@
   },
   "scripts": {
     "lint": "tslint --project tsconfig-build.json",
+    "lint-fix": "tslint --project tsconfig-build.json --fix",
     "build": "npm-run-all clean build:ts",
     "build:ts": "tsc -p tsconfig-build.json",
     "bundle": "rm -rf docs/ && webpack --config webpack/bundle.ts",
