@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { fromRenderProp, ChainableComponent, RenderPropsProps } from '../ChainableComponent';
+import { ChainableComponent, fromRenderProp, RenderPropsProps } from '../ChainableComponent';
 
 /**
  * The state used by the WithState render prop.
  */
 export type WithStateState<A> = {
-  value: A
+  value: A,
 };
 
 /**
@@ -13,21 +13,21 @@ export type WithStateState<A> = {
  */
 export type WithStateContext<A> = {
   value: A,
-  update: (a: A) => void
+  update: (a: A) => void,
 };
 
 /**
- * The options to pass 
+ * The options to pass
  */
 export type WithStateOptions<A> = {
-  initial: A
+  initial: A,
 };
 
 export type WithStateProps<A> = RenderPropsProps<WithStateOptions<A>, WithStateContext<A>>;
 
 export class WithState<A> extends React.Component<WithStateProps<A>, WithStateState<A>> {
   state: WithStateState<A> = {
-    value: this.props.initial
+    value: this.props.initial,
   };
 
   constructor(props: WithStateProps<A>) {
@@ -37,14 +37,14 @@ export class WithState<A> extends React.Component<WithStateProps<A>, WithStateSt
 
   update(a: A) {
     this.setState({
-      value: a
+      value: a,
     });
   }
 
   render() {
     return this.props.children({
       value: this.state.value,
-      update: this.update
+      update: this.update,
     });
   }
 }

@@ -11,6 +11,7 @@
     "url": "https://paulgray.net/"
   },
   "scripts": {
+    "lint": "tslint --project tsconfig-build.json",
     "build": "npm-run-all clean build:ts",
     "build:ts": "tsc -p tsconfig-build.json",
     "bundle": "rm -rf docs/ && webpack --config webpack/bundle.ts",
