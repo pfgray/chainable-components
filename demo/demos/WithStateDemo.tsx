@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { withState } from '../../src/lib/withState';
 import Step from '../Step';
-// import { all } from '../src/ChainableComponent';
 
 export const WithStateDemo =
   withState({ initial: 0 }).chain(outer =>
     withState({ initial: 16 }).map(inner =>
       ({ inner, outer })
     )
-  ).ap(({ inner, outer }) => (
+  ).render(({ inner, outer }) => (
       <div>
         <div>Outer: {outer.value} <button onClick={() => outer.update(outer.value + 1)}>+</button></div>
         <div>Inner: {inner.value} <button onClick={() => inner.update(inner.value + 1)}>+</button></div>
@@ -25,7 +24,7 @@ withState({initial: 0}).chain(outer =>
     ({inner, outer})
   )
 )
-.ap(({inner, outer}) => (
+.render(({inner, outer}) => (
   <div>
     <div>Outer: {outer.value} <button onClick={() => outer.update(outer.value + 1)}>+</button></div>
     <div>Inner: {inner.value} <button onClick={() => inner.update(inner.value + 1)}>+</button></div>
@@ -35,14 +34,4 @@ withState({initial: 0}).chain(outer =>
     {WithStateDemo}
   </Step>
 );
-  //   all([
-  //     withState({initial: 'yo'}),
-  //     withState({initial: 16})
-  //   ])
-  // .ap(([outer, inner]) => (
-  //   <div>
-  //     <div>Outer: {outer.value} <button onClick={() => outer.update(outer.value + 1)}></button></div>
-  //     <div>Inner: {inner.value} <button onClick={() => inner.update(inner.value + 1)}></button></div>
-  //   </div>
-  // ));
 

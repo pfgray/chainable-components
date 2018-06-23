@@ -1,21 +1,19 @@
-import { 
+import {
   ChainableComponent,
-  RenderPropsProps,
-  RenderPropsComponent,
+  fromRender,
   fromRenderProp,
-  fromAp,
-  all,
+  RenderPropsComponent,
+  RenderPropsProps,
 } from './ChainableComponent';
-import { withState, WithState } from './lib/withState';
 import { withPromise, WithPromise } from './lib/withPromise';
+import { withState, WithState } from './lib/withState';
 
 export {
   ChainableComponent,
   RenderPropsProps,
   RenderPropsComponent,
   fromRenderProp,
-  fromAp,
-  all,
+  fromRender,
   withState, WithState,
   withPromise, WithPromise,
 };

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withState } from '../../src/lib/withState';
-import { all } from '../../src/ChainableComponent';
+import { ChainableComponent } from '../../src/ChainableComponent';
 import Step from '../Step';
 
-export const WithStateDemo =
-  all([
+export const AllDemo =
+  ChainableComponent.all([
     withState({initial: 'string value'}),
     withState({initial: 1}),
     withState({initial: 2}),
@@ -12,7 +12,7 @@ export const WithStateDemo =
     withState({initial: 5}),
     withState({initial: 8})
   ])
-  .ap(([a, b, c, d, e, f]) => (
+  .render(([a, b, c, d, e, f]) => (
     <div>
       {/* a.value is inferred as a string */}
       <div>a: {a.value} <button onClick={() => a.update(a.value + 1)}>+</button></div>
@@ -27,11 +27,11 @@ export const WithStateDemo =
   ));
 
 export default () => (
-  <Step title="withState Demo">
+  <Step title="all Demo">
     <pre className='code-sample'>
-      {`import { withState, all } from 'chainable-components';
+      {`import { withState, ChainableComponent } from 'chainable-components';
 
-all([
+ChainableComponent.all([
   withState({initial: 'string value'}),
   withState({initial: 1}),
   withState({initial: 2}),
@@ -39,7 +39,7 @@ all([
   withState({initial: 5}),
   withState({initial: 8})
 ])
-.ap(([a, b, c, d, e, f]) => (
+.render(([a, b, c, d, e, f]) => (
   <div>
     {/* a.value is inferred as a string */}
     <div>a: {a.value} <button onClick={() => a.update(a.value + 1)}>+</button></div>
@@ -53,8 +53,6 @@ all([
   </div>
 ));`}
     </pre>
-    {WithStateDemo}
+    {AllDemo}
   </Step>
 );
-  
-

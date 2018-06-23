@@ -15,7 +15,7 @@ const ReactRouterDemoInner: React.SFC = () => (
       {`import { Route } from 'react-router';
 const withRoute = fromRenderProp(Route);
 
-withRoute({}).ap(
+withRoute({}).render(
   route => {
     return (
       <span>
@@ -27,7 +27,7 @@ withRoute({}).ap(
 )`}
     </pre>
     <Router history={customHistory}>
-      {withRoute({}).ap(
+      {withRoute({}).render(
         route => {
           return (
             <span>
