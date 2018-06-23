@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withState } from '../../src/lib/withState';
-import { all } from '../../src/ChainableComponent';
+import { ChainableComponent } from '../../src/ChainableComponent';
 import Step from '../Step';
 
 export const AllDemo =
-  all([
+  ChainableComponent.all([
     withState({initial: 'string value'}),
     withState({initial: 1}),
     withState({initial: 2}),
@@ -27,7 +27,7 @@ export const AllDemo =
   ));
 
 export default () => (
-  <Step title="withState Demo">
+  <Step title="all Demo">
     <pre className='code-sample'>
       {`import { withState, all } from 'chainable-components';
 
@@ -56,5 +56,3 @@ all([
     {AllDemo}
   </Step>
 );
-  
-

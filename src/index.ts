@@ -1,5 +1,4 @@
 import {
-  all,
   ChainableComponent,
   fromRender,
   fromRenderProp,
@@ -15,7 +14,6 @@ export {
   RenderPropsComponent,
   fromRenderProp,
   fromRender,
-  all,
   withState, WithState,
   withPromise, WithPromise,
 };
