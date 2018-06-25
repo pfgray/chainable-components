@@ -21,12 +21,14 @@ export type ChainableComponent<A> = {
    *          f will replace the existing in a new Chainable Component which is returned.
    */
   map<B>(f: (a: A) => B): ChainableComponent<B>;
+  'fantasyland/map'<B>(f: (a: A) => B): ChainableComponent<B>;
 
   /**
    * Converts the value inside this Chainable Component.
    * @param c Apply the function inside of c to the value inside of this Chainable Component
    */
   ap<B>(c: ChainableComponent<(a: A) => B>): ChainableComponent<B>;
+  'fantasyland/ap'<B>(c: ChainableComponent<(a: A) => B>): ChainableComponent<B>;
 
   /**
    * Composes or 'chains' another Chainable Component along with this one.
@@ -34,6 +36,7 @@ export type ChainableComponent<A> = {
    *          The result if this function will be returned.
    */
   chain<B>(f: (a: A) => ChainableComponent<B>): ChainableComponent<B>;
+  'fantasyland/chain'<B>(f: (a: A) => ChainableComponent<B>): ChainableComponent<B>;
 };
 
 /**
@@ -90,7 +93,7 @@ export function fromNonStandardRenderProp<P extends object, A>(
  * @param render
  */
 export function fromRender<A>(render: (f: (a: A) => ReactNode) => ReactNode): ChainableComponent<A> {
-  return {
+  const cc = {
     render,
     map<B>(f: (a: A) => B): ChainableComponent<B> {
       const Mapped: Applied<B> = g => this.render(a => g(f(a)));
@@ -104,6 +107,14 @@ export function fromRender<A>(render: (f: (a: A) => ReactNode) => ReactNode): Ch
       const FlatMapped: Applied<B> = g => this.render(a => f(a).render(g));
       return fromRender(FlatMapped);
     },
+  };
+
+  // https://github.com/fantasyland/fantasy-land/blob/master/README.md#prefixed-method-names
+  return {
+    ...cc,
+    'fantasyland/map': cc.map,
+    'fantasyland/ap': cc.ap,
+    'fantasyland/chain': cc.chain,
   };
 }
 
@@ -129,13 +140,16 @@ function all(values: CC<any>[]) {
   }, ChainableComponent.of([]));
 }
 
+function of<A>(a: A): ChainableComponent<A> {
+  return fromRender(f => f(a));
+}
+
 export const ChainableComponent = {
   /**
    * Wraps any value 'A' into a chainable component.
    * @param a the value that provides the context.
    */
-  of<A>(a: A): ChainableComponent<A> {
-    return fromRender(f => f(a));
-  },
+  of,
+  'fantasyland/of': of,
   all,
 };
