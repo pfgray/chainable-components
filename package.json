@@ -13,9 +13,9 @@
   "scripts": {
     "lint": "tslint --project tsconfig-build.json",
     "lint-fix": "tslint --project tsconfig-build.json --fix",
-    "build": "npm-run-all clean build:ts",
+    "build": "npm-run-all clean build:ts build:dist",
     "build:ts": "tsc -p tsconfig-build.json",
-    "bundle": "rm -rf docs/ && webpack --config webpack/bundle.ts",
+    "build:dist": "webpack --config webpack/bundle.ts",
     "clean": "rm -rf lib/",
     "start": "webpack-dev-server --config webpack/hot.ts",
     "test": "npm-run-all build test:lint test:unit",
