@@ -1,4 +1,4 @@
-import { createFactory, ReactNode } from 'react';
+import { createFactory, ReactNode, createElement } from 'react';
 
 /**
  * A composable wrapper around React effects.
@@ -14,6 +14,19 @@ export type ChainableComponent<A> = {
    *          additional functionality.
    */
   render(f: (a: A) => ReactNode): ReactNode;
+
+  /**
+   * Renders this chainable into a render prop component.
+   * @param prop Defines which prop will be used to render a component.
+   *        Defaults to children
+   */
+  toRenderProp<P>(prop?: string): React.ComponentType<P & { [prop: string]: (a: A) => ReactNode }>;
+
+  /**
+   * Renders this chainable into a Higher Order Component.
+   * @param propMapper A function which maps chainable arguments into props
+   */
+  toHigherOrderComponent<B extends object, P extends object>(propMapper : (b : A) => B ) : (component : React.ComponentType<any>) => React.ComponentType<P>;
 
   /**
    * Converts the value inside this Chainable Component.
@@ -71,6 +84,53 @@ export function fromRenderProp<P extends object, A>(Inner: RenderPropsComponent<
 }
 
 /**
+ * Converts a ChainableComponent to a render prop component
+ * @param chainable The chainable component
+ * @param {string} [prop=children] defaults to children
+ */
+export function toRenderProp<P, A>(
+  chainable: ChainableComponent<A>,
+  prop = 'children'
+): React.ComponentType<P & { [prop: string]: (a: A) => ReactNode }> {
+  return props =>
+    createElement('div', undefined, chainable.render(props[prop]));
+}
+
+/**
+ * Converts a HigherOrderComponent to a ChainableComponent
+ * @param hoc The HigherOrderComponent
+ */
+export function fromHigherOrderComponent<P>(
+  hoc: (a: React.ComponentType<P>) => React.ComponentType<P>
+): ChainableComponent<P> {
+  return fromRender(f =>
+    hoc(props => createElement('div', undefined, f(props)))
+  );
+}
+
+/**
+ * Converts a ChainableComponent to a HigherOrderComponent
+ * @param chainable The ChainableComponent
+ * @param propMapper converts render prop to a prop object
+ */
+export function toHigherOrderComponent<A, B extends object, P extends object>(
+  chainable: ChainableComponent<A>,
+  propMapper: (b: A) => B
+): (component: React.ComponentType<any>) => React.ComponentType<P> {
+  return component => (ownProps: P) =>
+    createElement(
+      'div',
+      undefined,
+      chainable.render(props =>
+        createElement(component, {
+          ...(ownProps as object),
+          ...(propMapper(props) as object)
+        })
+      )
+    );
+}
+
+/**
  * Converts a Render Props Component into a function that can be used to build a ChainableComponent
  * If a renderMethod name is not provided, it defaults to `children`.
  * @param Inner the render prop component
@@ -115,6 +175,12 @@ export function fromRender<A>(render: (f: (a: A) => ReactNode) => ReactNode): Ch
     'fantasyland/map': cc.map,
     'fantasyland/ap': cc.ap,
     'fantasyland/chain': cc.chain,
+    toRenderProp(method?: string) {
+      return toRenderProp(this, method);
+    },
+    toHigherOrderComponent(mapper) {
+      return toHigherOrderComponent(this, mapper);
+    }
   };
 }
 
