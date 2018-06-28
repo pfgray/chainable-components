@@ -13,6 +13,9 @@
   "scripts": {
     "lint": "tslint --project tsconfig-build.json",
     "lint-fix": "tslint --project tsconfig-build.json --fix",
+    "docs": "",
+    "docs:gitbook": "gitbook build",
+    "docs:typedoc": "typedoc --module commonjs --out docs/typedoc/ src/",
     "build": "npm-run-all clean build:ts build:dist",
     "build:ts": "tsc -p tsconfig-build.json",
     "build:dist": "webpack --config webpack/bundle.ts",
@@ -58,6 +61,7 @@
     "ts-loader": "^4.0.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
+    "typedoc": "^0.11.1",
     "typescript": "^2.5.3",
     "webpack": "^4.0.0",
     "webpack-cli": "^3.0.3",
