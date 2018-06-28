@@ -103,8 +103,8 @@ export function toRenderProp<P, A>(
 export function fromHigherOrderComponent<P>(
   hoc: (a: React.ComponentType<P>) => React.ComponentType<P>
 ): ChainableComponent<P> {
-  return fromRender(f =>
-    hoc(props => createElement('div', undefined, f(props)))
+  return fromRender(f => 
+    createElement(hoc(props => f(props) as any))
   );
 }
 
