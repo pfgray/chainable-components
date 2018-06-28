@@ -1,0 +1,12 @@
+{
+  "root": "docs/",
+  "title": "Chainable Components",
+  "plugins": [
+    "prism",
+    "-highlight",
+    "-search"
+  ],
+  "styles": {
+    "website": "styles.css"
+  }
+}

@@ -1,4 +1,4 @@
-import * as React from 'react';;
+import * as React from 'react';
 import { Route, Router } from 'react-router';
 import { fromRenderProp } from '../../src/ChainableComponent';
 import Step from '../Step';

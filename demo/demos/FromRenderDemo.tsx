@@ -8,9 +8,9 @@ export const FromRenderDemo =
       return <div>Applied: {ap(5)}</div>
     }
   ))
-    .render(a => (
-      <div>test: {a}</div>
-    ));
+  .render(a => (
+    <div>test: {a}</div>
+  ));
 
 export default () => (
   <Step title="FromAp Demo">
