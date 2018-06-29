@@ -56,7 +56,7 @@ Since the `get` function will return a promise of `User`, the contextual value i
 ### Rendering a Chainable Component:
 Since the ”wrapped” value’s type is  `User`, the `ap` method takes a function which takes a user, and returns the rendered output:
 ```jsx
-userChainable.ap(user => (
+userChainable.render(user => (
   <div>Hello, {user.username}!</div>
 ));
 ```
@@ -64,7 +64,7 @@ userChainable.ap(user => (
 All together, this looks like:
 ```jsx
 withPromise({get: () => fetchUser(1234)})
-  .ap(user => (
+  .render(user => (
     <div>{user.id} - {user.username}</div>
   ))
 ```
@@ -83,7 +83,7 @@ Suppose we didn’t care about any information about the user at all, only their
 ```jsx
 withPromise({get: () => fetchUser(1234)})
   .map(user => user.role === 'Administrator')
-  .ap(isAdmin => (
+  .render(isAdmin => (
     isAdmin ? (<div>secret plans...</div>) :
       <div>Access denied!</div>
   ));
@@ -98,7 +98,7 @@ Let's suppose we have a `fadeIn` chainable component, which just applies styles 
 
 ```jsx
 fadeIn({duration: 500, delay: 0})
-  .ap(() => (
+  .render(() => (
     <div>This is smooth!</div>
   ));
 ```
@@ -112,7 +112,7 @@ withPromise({get: () => fetchUser(1234)})
   .chain(user =>
     fadeIn({duration: 500, delay: 0})
       .map(() => user))
-  .ap(user => (
+  .render(user => (
 	  <div>{user.id} - {user.username}</div>
   ))
 ```

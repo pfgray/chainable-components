@@ -16,7 +16,7 @@ export type ChainableComponent<A> = {
   render(f: (a: A) => ReactNode): ReactNode;
 
   /**
-   * Converts the value inside this Chainable Component.
+   *
    * @param f A function which is used to convert this value. The result of
    *          f will replace the existing in a new Chainable Component which is returned.
    */
