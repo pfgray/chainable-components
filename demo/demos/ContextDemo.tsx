@@ -7,7 +7,7 @@ const { Consumer, Provider } = React.createContext("Default Value");
 const withContext = fromRenderProp(Consumer);
 
 const DisplayContext =
-  withContext({}).render(
+  withContext({children: () => 'hmmm'}).render(
     context => {
       return (
         <span>

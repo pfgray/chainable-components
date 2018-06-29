@@ -7,14 +7,14 @@ Chainable Components contain values (and functionality around those values) that
 
 The simplest example is constructing a chainable component from a static value:
 
-````js
-import { ChainableComponent } from ''; 
+````javascript
+import { ChainableComponent } from 'chainable-components'; 
 const withFive = ChainableComponent.of('five');
 ````
 
 The constant `withFive` is now a chainable component containing the value `"five"` and it's type is said to be "a chainable component of string," or, `ChainableComponent<string>`. If we want to render this chainable component, we need to supply a function of type: `(s: string) => ReactNode`, and pass it off to the `render` method:
 
-````js
+````jsx
 <div>
   {withFive.render(str => (
     <span>{str}</span>

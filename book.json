@@ -1,5 +1,5 @@
 {
-  "root": "docs/",
+  "root": "./docs",
   "title": "Chainable Components",
   "plugins": [
     "prism",
@@ -8,5 +8,11 @@
   ],
   "styles": {
     "website": "styles.css"
+  },
+  "links": {
+    "sidebar": {
+      "Typedoc": "/typedoc",
+      "Github": "https://github.com/pfgray/chainable-components"
+    }
   }
 }
