@@ -1,5 +1,5 @@
 {
-  "root": "./docs",
+  "root": "./docsSrc",
   "title": "Chainable Components",
   "plugins": [
     "prism",
