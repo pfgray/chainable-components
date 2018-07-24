@@ -27,7 +27,7 @@ withRoute({}).render(
 )`}
     </pre>
     <Router history={customHistory}>
-      {withRoute({}).render(
+      {withRoute.render(
         route => {
           return (
             <span>

@@ -1,4 +1,6 @@
-import { createFactory, ReactNode } from 'react';
+import * as React from 'react';
+
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
 /**
  * A composable wrapper around React effects.
@@ -13,7 +15,7 @@ export type ChainableComponent<A> = {
    *          This method returns another ReactNode, possibly wrapped with
    *          additional functionality.
    */
-  render(f: (a: A) => ReactNode): ReactNode;
+  render(f: (a: A) => React.ReactNode): React.ReactNode;
 
   /**
    *
@@ -44,45 +46,94 @@ export type ChainableComponent<A> = {
  * @type P represents the props used to configure the Render Prop component.
  * @type A represents the type of the contextual value of the Render Props component.
  */
-export type RenderPropsProps<P, A> = P & {
-  children: (a: A) => ReactNode,
-};
+export type RenderPropsProps<P, A> = P & ChildrenProp<A>;
 
 /**
- * Represents a Render Prop component.
- * @type P encapsulates the props used to configure this Render Prop
- * @type A represents the type of the contextual value of the Render Props component.
+ * Represents a standard Render Prop's children property
  */
-export type RenderPropsComponent<P, A> = React.ComponentType<RenderPropsProps<P, A>>;
+export type ChildrenProp<A> = {
+  children: (a: A) => React.ReactNode
+};
 
 /**
  * Represents a function that takes a value A and returns a renderable ReactNode.
  */
-type Applied<A> = (f: (a: A) => ReactNode) => ReactNode;
+type Applied<A> = (f: (a: A) => React.ReactNode) => React.ReactNode;
 
-export function fromRenderProp<P extends object, A>(Inner: RenderPropsComponent<P, A>): (p: P) => ChainableComponent<A> {
-  return p => fromRender(f => {
-    const apply = createFactory<RenderPropsProps<P, A>>(Inner as any);
-    return apply({
-      ...(p as any), // todo: we have any until https://github.com/Microsoft/TypeScript/pull/13288 is merged
-      children: f,
-    });
+/**
+ * Infers the type of the parameter to the 'children' function 
+ */
+export type InferChildren<P> = P extends {children: (a: infer A) => React.ReactNode} ? A : never;
+
+/**
+ * Represents an un-parameterized Render Prop component.
+ * @type P encapsulates the props used to configure this Render Prop
+ * @type A represents the type of the contextual value of the Render Props component.
+ */
+export type UnParameterizedRenderPropsComponent<A> = React.ComponentType<ChildrenProp<A>>
+
+/**
+ * Converts a Render Prop Component into a Chainable Component.
+ * @template A The type of the parameter of the 'children' prop
+ * @param Inner the render prop component
+ */
+export function fromRenderProp<A>(
+  Inner: UnParameterizedRenderPropsComponent<A>
+): ChainableComponent<A>;
+
+/**
+ * Converts a Render Prop Component into a Chainable Component.
+ * @template A The type of the parameter of the 'children' prop
+ * @param Inner the render prop component
+ * @param parameters an object containing the props that shoud be applied to this render prop component.
+ */
+export function fromRenderProp<P extends ChildrenProp<any>>(
+  Inner: React.ComponentType<P>, parameters: Omit<P, "children">
+): ChainableComponent<InferChildren<P>>;
+
+export function fromRenderProp<P extends ChildrenProp<A>, A>(
+  Inner: React.ComponentType<P> | UnParameterizedRenderPropsComponent<A>, parameters?: Omit<P, "children">
+): ChainableComponent<A> {
+  return fromRender(f => {
+    const apply = React.createFactory<P>(Inner as any);
+    if(parameters) {
+      return apply({
+        ...(parameters as any), // todo: we have any until https://github.com/Microsoft/TypeScript/pull/13288 is merged
+        children: f,
+      });
+    } else {
+      return apply({
+        children: f
+      } as any);
+    }
   });
 }
 
 /**
- * Converts a Render Props Component into a function that can be used to build a ChainableComponent
+ * Represents the type of a non standard render prop
+ * @template P the props of the render prop component
+ * @template A the type of the parameter of the render function
+ * @template C the string of the key of the render function
+ */
+type NonStandardRenderPropProps<P, A, C extends keyof P> = A & {
+  [K in C]: (a: P[K]) => React.ReactNode
+}
+
+/**
+ * Converts a Render Prop Component into a function that can be used to build a ChainableComponent
  * If a renderMethod name is not provided, it defaults to `children`.
+ * A "non-standard" render prop is any render prop that does not use the 'children' prop as the render method.
  * @param Inner the render prop component
  */
-export function fromNonStandardRenderProp<P extends object, A>(
-  renderMethod: string,
-  Inner: React.ComponentClass<P & { [render: string]: (a: A) => ReactNode }>,
-): (p: P) => ChainableComponent<A> {
-  return p => fromRender(f => {
-    const apply = createFactory<P & { [renderMethod: string]: (a: A) => ReactNode }>(Inner);
+export function fromNonStandardRenderProp<P, A, S extends keyof P>(
+  renderMethod: S,
+  Inner: React.ComponentType<NonStandardRenderPropProps<P, A, S>>,
+  parameters?: Omit<P, S>
+): ChainableComponent<A> {
+  return fromRender(f => {
+    const apply = React.createFactory<NonStandardRenderPropProps<P, A, S>>(Inner as any);
     return apply({
-      ...(p as any),
+      ...(parameters as any),
       [renderMethod]: f,
     });
   });
@@ -92,7 +143,7 @@ export function fromNonStandardRenderProp<P extends object, A>(
  * Converts an apply function to a ChainableComponent
  * @param render
  */
-export function fromRender<A>(render: (f: (a: A) => ReactNode) => ReactNode): ChainableComponent<A> {
+export function fromRender<A>(render: (f: (a: A) => React.ReactNode) => React.ReactNode): ChainableComponent<A> {
   const cc = {
     render,
     map<B>(f: (a: A) => B): ChainableComponent<B> {

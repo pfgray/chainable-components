@@ -53,8 +53,8 @@ export class WithPromise<A> extends React.Component<WithPromiseProps<A>, WithPro
 /**
  * Builds a chainable component that encapsulates the state around resolving a Promise which is
  * requested when this component mounts.
- * @param opts Options for this chainable component which provide a method that returns
+ * @param promise the promise returning function to use.
  */
-export function withPromise<A>(opts: WithPromiseOptions<A>): ChainableComponent<WithPromiseState<A>> {
-  return fromRenderProp<WithPromiseOptions<A>, WithPromiseState<A>>(WithPromise)(opts);
+export function withPromise<A>(promise: () => Promise<A>): ChainableComponent<WithPromiseState<A>> {
+  return fromRenderProp<WithPromiseProps<A>>(WithPromise, {get: promise});
 }
