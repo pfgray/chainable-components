@@ -49,6 +49,6 @@ export class WithState<A> extends React.Component<WithStateProps<A>, WithStateSt
   }
 }
 
-export function withState<A>(options: WithStateOptions<A>): ChainableComponent<WithStateContext<A>> {
-  return fromRenderProp<WithStateOptions<A>, WithStateContext<A>>(WithState)(options);
+export function withState<A>(a: A): ChainableComponent<WithStateContext<A>> {
+  return fromRenderProp<WithStateProps<A>>(WithState, {initial: a});
 }
