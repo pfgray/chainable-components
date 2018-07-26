@@ -1,0 +1,18 @@
+{
+  "root": "./docsSrc",
+  "title": "Chainable Components",
+  "plugins": [
+    "prism",
+    "-highlight",
+    "-search"
+  ],
+  "styles": {
+    "website": "styles.css"
+  },
+  "links": {
+    "sidebar": {
+      "Typedoc": "typedoc",
+      "Github": "https://github.com/pfgray/chainable-components"
+    }
+  }
+}

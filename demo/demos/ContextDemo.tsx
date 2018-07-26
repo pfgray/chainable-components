@@ -2,12 +2,13 @@ import * as React from 'react';
 import { fromRenderProp } from '../../src/ChainableComponent';
 // how to create a context hoc?
 import Step from '../Step';
+
 const { Consumer, Provider } = React.createContext("Default Value");
 
 const withContext = fromRenderProp(Consumer);
 
 const DisplayContext =
-  withContext({ children: () => 'hmm, this should be necessary' }).render(
+  withContext.render(
     context => {
       return (
         <span>

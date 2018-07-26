@@ -56,7 +56,7 @@ const hotConfig = {
   devtool: '#cheap-module-source-map',
   mode: 'development',
   devServer: {
-    contentBase: CONSTANTS.DOCS_DIR,
+    contentBase: CONSTANTS.BUILD_DIR,
     historyApiFallback: true,
     hot: true,
     stats: 'minimal',

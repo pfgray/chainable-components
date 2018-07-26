@@ -4,6 +4,6 @@ const DEMO_FOLDER = path.join(__dirname, '..', 'demo/');
 export const CONSTANTS = {
   APP_ENTRY: path.join(DEMO_FOLDER, 'index.tsx'),
   HTML_TEMPLATE: path.join(__dirname, 'index-template.html'),
-  DOCS_DIR: path.join(__dirname, '..', 'docs/'),
+  BUILD_DIR: path.join(__dirname, '..', 'lib/dist/'),
   DEV_SERVER_PORT: 8092,
 };

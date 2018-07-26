@@ -7,7 +7,7 @@ const config: webpack.Configuration = {
   entry: CONSTANTS.APP_ENTRY,
   output: {
     filename: 'chainable-components.js',
-    path: CONSTANTS.DOCS_DIR,
+    path: CONSTANTS.BUILD_DIR,
   },
   devtool: '#source-map',
   resolve: {
