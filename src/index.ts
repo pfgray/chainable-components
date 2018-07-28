@@ -3,7 +3,6 @@ import {
   fromRender,
   fromRenderProp,
   RenderPropsProps,
-  fromHigherOrderComponent,
   toRenderProp,
   toHigherOrderComponent,
 } from './ChainableComponent';
@@ -16,7 +15,6 @@ export {
   fromRenderProp,
   fromRender,
   toRenderProp,
-  fromHigherOrderComponent,
   toHigherOrderComponent,
   withState, WithState,
   withPromise, WithPromise,
