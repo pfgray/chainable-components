@@ -5,12 +5,12 @@ import Step from '../Step';
 
 export const AllDemo =
   ChainableComponent.all([
-    withState({initial: 'string value'}),
-    withState({initial: 1}),
-    withState({initial: 2}),
-    withState({initial: 3}),
-    withState({initial: 5}),
-    withState({initial: 8})
+    withState('string value'),
+    withState(1),
+    withState(2),
+    withState(3),
+    withState(5),
+    withState(8)
   ])
   .render(([a, b, c, d, e, f]) => (
     <div>
