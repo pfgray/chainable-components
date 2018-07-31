@@ -7,13 +7,11 @@ import './demo.less';
 
 const Demos = require.context('./demos', true, /\.*\.tsx$/);
 
-const APP_ELEMENT = document.body;
+const APP_ELEMENT = document.getElementById("app");
 const render = (Component: React.ComponentType<any>) => {
   ReactDOM.render(
     <AppContainer>
-      <div id="app">
       <Component/>
-      </div>
     </AppContainer>,
     APP_ELEMENT,
   );

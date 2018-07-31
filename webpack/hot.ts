@@ -44,7 +44,8 @@ const plugins = [
   }),
   new webpack.HotModuleReplacementPlugin(),
   new HtmlWebpackPlugin({
-    title: '🔗-able Components'
+    title: '🔗-able Components',
+    template: 'demo/index.html'
   })
 ];
 
