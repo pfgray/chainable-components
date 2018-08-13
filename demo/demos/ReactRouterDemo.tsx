@@ -15,7 +15,7 @@ const ReactRouterDemoInner: React.SFC = () => (
       {`import { Route } from 'react-router';
 const withRoute = fromRenderProp(Route);
 
-withRoute({}).render(
+withRoute.render(
   route => {
     return (
       <span>

@@ -22,7 +22,7 @@ export const DoDemo =
 export default () => (
   <Step title="Do Demo">
     <pre className='code-sample'>
-      {`import { withState, ChainableComponent } from 'chainable-components';
+{`import { withState, ChainableComponent } from 'chainable-components';
 
 ChainableComponent.Do(
   withState(5),
