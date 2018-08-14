@@ -258,6 +258,119 @@ function of<A>(a: A): ChainableComponent<A> {
   return fromRender(f => f(a));
 }
 
+function Do<T1, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<Z>,
+): ChainableComponent<Z>
+function Do<T1, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => Z
+): ChainableComponent<Z>
+
+function Do<T1, T2, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  z:  (t1: T1, t2: T2) => ChainableComponent<Z>
+): ChainableComponent<Z>
+function Do<T1, T2, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  z:  (t1: T1, t2: T2) => Z
+): ChainableComponent<Z>
+
+function Do<T1, T2, T3, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t1: T1, t2: T2) => ChainableComponent<T3>,
+  z:  (t1: T1, t2: T2, t3: T3) => ChainableComponent<Z>
+): ChainableComponent<Z>
+function Do<T1, T2, T3, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t1: T1, t2:T2) => ChainableComponent<T3>,
+  z:  (t1: T1, t2: T2, t3: T3) => Z
+): ChainableComponent<Z>
+
+function Do<T1, T2, T3, T4, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t1: T1, t2: T2) => ChainableComponent<T3>,
+  f3: (t1: T1, t2: T2, t3: T3) => ChainableComponent<T4>,
+  z:  (t1: T1, t2: T2, t3: T3, t4: T4) => ChainableComponent<Z>
+): ChainableComponent<Z>
+function Do<T1, T2, T3, T4, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t1: T1, t2: T2) => ChainableComponent<T3>,
+  f3: (t1: T1, t2: T2, t3: T3) => ChainableComponent<T4>,
+  z:  (t1: T1, t2: T2, t3: T3, t4: T4) => Z
+): ChainableComponent<Z>
+
+function Do<T1, T2, T3, T4, T5, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t1: T1, t2: T2) => ChainableComponent<T3>,
+  f3: (t1: T1, t2: T2, t3: T3) => ChainableComponent<T4>,
+  f4: (t1: T1, t2: T2, t3: T3, t4: T4) => ChainableComponent<T5>,
+  z:  (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => ChainableComponent<Z>
+): ChainableComponent<Z>
+function Do<T1, T2, T3, T4, T5, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t1: T1, t2: T2) => ChainableComponent<T3>,
+  f3: (t1: T1, t2: T2, t3: T3) => ChainableComponent<T4>,
+  f4: (t1: T1, t2: T2, t3: T3, t4: T4) => ChainableComponent<T5>,
+  z:  (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => Z
+): ChainableComponent<Z>
+
+function Do<T1, T2, T3, T4, T5, T6, Z>(
+  c: ChainableComponent<T1>,
+  f1: (ts: [T1]) => ChainableComponent<T2>,
+  f2: (ts: [T1, T2]) => ChainableComponent<T3>,
+  f3: (ts: [T1, T2, T3]) => ChainableComponent<T4>,
+  f4: (ts: [T1, T2, T3, T4]) => ChainableComponent<T5>,
+  f5: (ts: [T1, T2, T3, T4, T5]) => ChainableComponent<T6>,
+  z:  (ts: [T1, T2, T3, T4, T5, T6]) => ChainableComponent<Z>
+): ChainableComponent<Z>
+function Do<T1, T2, T3, T4, T5, T6, Z>(
+  c: ChainableComponent<T1>,
+  f1: (ts: [T1]) => ChainableComponent<T2>,
+  f2: (ts: [T1, T2]) => ChainableComponent<T3>,
+  f3: (ts: [T1, T2, T3]) => ChainableComponent<T4>,
+  f4: (ts: [T1, T2, T3, T4]) => ChainableComponent<T5>,
+  f5: (ts: [T1, T2, T3, T4, T5]) => ChainableComponent<T6>,
+  z:  (ts: [T1, T2, T3, T4, T5, T6]) => Z
+): ChainableComponent<Z>
+
+function Do(a: ChainableComponent<any>, ...fns: Function[]): ChainableComponent<any> {
+  function doIt(as: ChainableComponent<any[]>, fns: Function[]): any {
+    const [fn, ...rest] = fns;
+    if(rest.length === 0) {
+      return as.chain(a2s => {
+        const aPrime = fn.apply(null, a2s);
+        if(isChainableComponent(aPrime)) {
+          return aPrime;
+        } else {
+          return of(aPrime);
+        }
+      });
+    } else {
+      return as.chain(a2s => {
+        const aPrime = fn.apply(null, a2s);
+        return doIt(aPrime.map((aP: any) => [...a2s, aP]), rest);
+      });
+    }
+  }
+  return doIt(a.map(a2 => [a2]), fns);
+}
+
+const isChainableComponent = (a: any) => {
+  return typeof a.chain === 'function' && 
+     typeof a.map === 'function' && 
+     typeof a.ap === 'function' && 
+     typeof a.render === 'function'
+}
+
 export const ChainableComponent = {
   /**
    * Wraps any value 'A' into a chainable component.
@@ -266,4 +379,5 @@ export const ChainableComponent = {
   of,
   'fantasyland/of': of,
   all,
+  Do,
 };
