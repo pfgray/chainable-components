@@ -15,6 +15,15 @@ interface InferableHOC<ProvidedProps> {
 }
 
 /**
+ * Represents a HoC, whose wrapped component props are inferable. 
+ */
+interface InferableHOCWithProps<ProvidedProps, NeededProps> {
+  <B extends ProvidedProps>(
+    c: React.ComponentType<B>,
+  ): React.ComponentType<Omit<B, keyof ProvidedProps> & NeededProps>;
+}
+
+/**
  * A composable wrapper around React effects.
  *
  */
@@ -163,6 +172,22 @@ export function toHigherOrderComponent<A, B extends object>(
           ...(propMapper(a) as object),
         } as any),
       ) as React.ReactElement<any> | null;
+}
+
+type DummyRenderPropProps<A, B> = A & {
+  children: (b:B) => React.ReactNode
+}
+
+/**
+ * Converts a HigherOrderComponent to a ChainableComponent
+ * @param hoc The HigherOrderComponent
+ */
+export function fromHigherOrderComponent<P>(
+  hoc: InferableHOCWithProps<P, any>
+): ChainableComponent<P> {
+  const Dummy: React.SFC<DummyRenderPropProps<P, P>> = props => props.children(props) as React.ReactElement<any> | null;
+  const RenderPropComponent = hoc(Dummy);
+  return fromRenderProp(RenderPropComponent as any);
 }
 
 /**
