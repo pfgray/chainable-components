@@ -295,76 +295,76 @@ function Do<T1, Z>(
 function Do<T1, T2, Z>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
-  z:  (t1: T1, t2: T2) => ChainableComponent<Z>
+  z:  (t2: T2, t1: T1) => ChainableComponent<Z>
 ): ChainableComponent<Z>
 function Do<T1, T2, Z>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
-  z:  (t1: T1, t2: T2) => Z
+  z:  (t2: T2, t1: T1) => Z
 ): ChainableComponent<Z>
 
 function Do<T1, T2, T3, Z>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
-  f2: (t1: T1, t2: T2) => ChainableComponent<T3>,
-  z:  (t1: T1, t2: T2, t3: T3) => ChainableComponent<Z>
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  z:  (t3: T3, t2: T2, t1: T1) => ChainableComponent<Z>
 ): ChainableComponent<Z>
 function Do<T1, T2, T3, Z>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
-  f2: (t1: T1, t2:T2) => ChainableComponent<T3>,
-  z:  (t1: T1, t2: T2, t3: T3) => Z
+  f2: (t2: T2, t1:T1) => ChainableComponent<T3>,
+  z:  (t3: T3, t2: T2, t1: T1) => Z
 ): ChainableComponent<Z>
 
 function Do<T1, T2, T3, T4, Z>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
-  f2: (t1: T1, t2: T2) => ChainableComponent<T3>,
-  f3: (t1: T1, t2: T2, t3: T3) => ChainableComponent<T4>,
-  z:  (t1: T1, t2: T2, t3: T3, t4: T4) => ChainableComponent<Z>
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  f3: (t3: T3, t2: T2, t1: T1) => ChainableComponent<T4>,
+  z:  (t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<Z>
 ): ChainableComponent<Z>
 function Do<T1, T2, T3, T4, Z>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
-  f2: (t1: T1, t2: T2) => ChainableComponent<T3>,
-  f3: (t1: T1, t2: T2, t3: T3) => ChainableComponent<T4>,
-  z:  (t1: T1, t2: T2, t3: T3, t4: T4) => Z
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  f3: (t3: T3, t2: T2, t1: T1) => ChainableComponent<T4>,
+  z:  (t4: T4, t3: T3, t2: T2, t1: T1) => Z
 ): ChainableComponent<Z>
 
 function Do<T1, T2, T3, T4, T5, Z>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
-  f2: (t1: T1, t2: T2) => ChainableComponent<T3>,
-  f3: (t1: T1, t2: T2, t3: T3) => ChainableComponent<T4>,
-  f4: (t1: T1, t2: T2, t3: T3, t4: T4) => ChainableComponent<T5>,
-  z:  (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => ChainableComponent<Z>
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  f3: (t3: T3, t2: T2, t1: T1) => ChainableComponent<T4>,
+  f4: (t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<T5>,
+  z:  (t5: T5, t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<Z>
 ): ChainableComponent<Z>
 function Do<T1, T2, T3, T4, T5, Z>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
-  f2: (t1: T1, t2: T2) => ChainableComponent<T3>,
-  f3: (t1: T1, t2: T2, t3: T3) => ChainableComponent<T4>,
-  f4: (t1: T1, t2: T2, t3: T3, t4: T4) => ChainableComponent<T5>,
-  z:  (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => Z
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  f3: (t3: T3, t2: T2, t1: T1) => ChainableComponent<T4>,
+  f4: (t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<T5>,
+  z:  (t5: T5, t4: T4, t3: T3, t2: T2, t1: T1) => Z
 ): ChainableComponent<Z>
 
 function Do<T1, T2, T3, T4, T5, T6, Z>(
   c: ChainableComponent<T1>,
-  f1: (ts: [T1]) => ChainableComponent<T2>,
-  f2: (ts: [T1, T2]) => ChainableComponent<T3>,
-  f3: (ts: [T1, T2, T3]) => ChainableComponent<T4>,
-  f4: (ts: [T1, T2, T3, T4]) => ChainableComponent<T5>,
-  f5: (ts: [T1, T2, T3, T4, T5]) => ChainableComponent<T6>,
-  z:  (ts: [T1, T2, T3, T4, T5, T6]) => ChainableComponent<Z>
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  f3: (t3: T3, t2: T2, t1: T1) => ChainableComponent<T4>,
+  f4: (t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<T5>,
+  f5: (t5: T5, t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<T6>,
+  z:  (t6: T6, t5: T5, t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<Z>
 ): ChainableComponent<Z>
 function Do<T1, T2, T3, T4, T5, T6, Z>(
   c: ChainableComponent<T1>,
-  f1: (ts: [T1]) => ChainableComponent<T2>,
-  f2: (ts: [T1, T2]) => ChainableComponent<T3>,
-  f3: (ts: [T1, T2, T3]) => ChainableComponent<T4>,
-  f4: (ts: [T1, T2, T3, T4]) => ChainableComponent<T5>,
-  f5: (ts: [T1, T2, T3, T4, T5]) => ChainableComponent<T6>,
-  z:  (ts: [T1, T2, T3, T4, T5, T6]) => Z
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  f3: (t3: T3, t2: T2, t1: T1) => ChainableComponent<T4>,
+  f4: (t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<T5>,
+  f5: (t5: T5, t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<T6>,
+  z:  (t6: T6, t5: T5, t4: T4, t3: T3, t2: T2, t1: T1) => Z
 ): ChainableComponent<Z>
 
 function Do(a: ChainableComponent<any>, ...fns: Function[]): ChainableComponent<any> {
@@ -382,7 +382,7 @@ function Do(a: ChainableComponent<any>, ...fns: Function[]): ChainableComponent<
     } else {
       return as.chain(a2s => {
         const aPrime = fn.apply(null, a2s);
-        return doIt(aPrime.map((aP: any) => [...a2s, aP]), rest);
+        return doIt(aPrime.map((aP: any) => [aP, ...a2s]), rest);
       });
     }
   }
