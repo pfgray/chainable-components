@@ -7,10 +7,12 @@ export const DoDemo =
   ChainableComponent.Do(
     withState(5),
     (outer) => withState(2 + outer.value),
-    (outer, inner) => ({outer, inner})
+    () => withState('foo'),
+    (foo, inner, outer) => ({outer, inner, foo})
   )
-  .render(({outer, inner}) => (
+  .render(({outer, inner, foo}) => (
     <div>
+      {foo.value}
       <div>outer: {outer.value}</div>
       <button onClick={() => outer.update(outer.value + 1)}>+</button>
 
