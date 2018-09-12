@@ -56,14 +56,22 @@ export type ChainableComponent<A> = {
    *          f will replace the existing in a new Chainable Component which is returned.
    */
   map<B>(f: (a: A) => B): ChainableComponent<B>;
+  /**
+   * @deprecated: use fantasy-land/map instead
+   */
   'fantasyland/map'<B>(f: (a: A) => B): ChainableComponent<B>;
+  'fantasy-land/map'<B>(f: (a: A) => B): ChainableComponent<B>;
 
   /**
    * Converts the value inside this Chainable Component.
    * @param c Apply the function inside of c to the value inside of this Chainable Component
    */
   ap<B>(c: ChainableComponent<(a: A) => B>): ChainableComponent<B>;
+  /**
+   * @deprecated: use fantasy-land/ap instead
+   */
   'fantasyland/ap'<B>(c: ChainableComponent<(a: A) => B>): ChainableComponent<B>;
+  'fantasy-land/ap'<B>(c: ChainableComponent<(a: A) => B>): ChainableComponent<B>;
 
   /**
    * Composes or 'chains' another Chainable Component along with this one.
@@ -71,7 +79,11 @@ export type ChainableComponent<A> = {
    *      The result if this function will be returned.
    */
   chain<B>(f: (a: A) => ChainableComponent<B>): ChainableComponent<B>;
+  /**
+   * @deprecated: use fantasy-land/ap instead
+   */
   'fantasyland/chain'<B>(f: (a: A) => ChainableComponent<B>): ChainableComponent<B>;
+  'fantasy-land/chain'<B>(f: (a: A) => ChainableComponent<B>): ChainableComponent<B>;
 };
 
 /**
@@ -246,8 +258,11 @@ export function fromRender<A>(render: (f: (a: A) => React.ReactNode) => React.Re
   return {
     ...cc,
     'fantasyland/map': cc.map,
+    'fantasy-land/map': cc.map,
     'fantasyland/ap': cc.ap,
+    'fantasy-land/ap': cc.ap,
     'fantasyland/chain': cc.chain,
+    'fantasy-land/chain': cc.chain,
     toRenderProp() {
       return toRenderProp(this);
     },
@@ -402,7 +417,11 @@ export const ChainableComponent = {
    * @param a the value that provides the context.
    */
   of,
+  /**
+   * @deprecated: use fantasy-land/of instead
+   */
   'fantasyland/of': of,
+  'fantasy-land/of': of,
   all,
   Do,
 };
