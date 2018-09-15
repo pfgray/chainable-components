@@ -19,6 +19,9 @@ Transform HOCs and Render Props to chainables and back:
 
 ![Chainable pipeline](docsSrc/chainable-pipeline.png?raw=true "Chainable pipeline")
 
+:point_down: Here's a blog post that introduces the API.  
+[https://paulgray.net/chainable-components](https://paulgray.net/chainable-components)
+
 Example:
 ```jsx
 import { Route } from 'react-router';
