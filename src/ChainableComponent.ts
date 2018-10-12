@@ -404,6 +404,66 @@ function Do(a: ChainableComponent<any>, ...fns: Function[]): ChainableComponent<
   return doIt(a.map(a2 => [a2]), fns);
 }
 
+function DoRender<T1, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => React.ReactNode,
+): React.ReactNode
+
+function DoRender<T1, T2, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  z:  (t2: T2, t1: T1) => React.ReactNode
+): React.ReactNode
+
+function DoRender<T1, T2, T3, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  z:  (t3: T3, t2: T2, t1: T1) => React.ReactNode
+): React.ReactNode
+
+function DoRender<T1, T2, T3, T4, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  f3: (t3: T3, t2: T2, t1: T1) => ChainableComponent<T4>,
+  z:  (t4: T4, t3: T3, t2: T2, t1: T1) => React.ReactNode
+): React.ReactNode
+
+function DoRender<T1, T2, T3, T4, T5, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  f3: (t3: T3, t2: T2, t1: T1) => ChainableComponent<T4>,
+  f4: (t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<T5>,
+  z:  (t5: T5, t4: T4, t3: T3, t2: T2, t1: T1) => React.ReactNode
+): React.ReactNode
+
+function DoRender<T1, T2, T3, T4, T5, T6, Z>(
+  c: ChainableComponent<T1>,
+  f1: (t1: T1) => ChainableComponent<T2>,
+  f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
+  f3: (t3: T3, t2: T2, t1: T1) => ChainableComponent<T4>,
+  f4: (t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<T5>,
+  f5: (t5: T5, t4: T4, t3: T3, t2: T2, t1: T1) => ChainableComponent<T6>,
+  z:  (t6: T6, t5: T5, t4: T4, t3: T3, t2: T2, t1: T1) => React.ReactNode
+): React.ReactNode
+
+function DoRender(a: ChainableComponent<any>, ...fns: Function[]): React.ReactNode {
+  function doIt(as: ChainableComponent<any[]>, fns: Function[]): any {
+    const [fn, ...rest] = fns;
+    if(rest.length === 0) {
+      return as.render(a2s => fn.apply(null, a2s));
+    } else {
+      return as.render(a2s => {
+        const aPrime = fn.apply(null, a2s);
+        return doIt(aPrime.map((aP: any) => [aP, ...a2s]), rest);
+      });
+    }
+  }
+  return doIt(a.map(a2 => [a2]), fns);
+}
+
 const isChainableComponent = (a: any) => {
   return typeof a.chain === 'function' && 
      typeof a.map === 'function' && 
@@ -424,4 +484,5 @@ export const ChainableComponent = {
   'fantasy-land/of': of,
   all,
   Do,
+  DoRender
 };
