@@ -2,9 +2,10 @@ import {
   ChainableComponent,
   fromRender,
   fromRenderProp,
+  fromHigherOrderComponent,
   RenderPropsProps,
   toRenderProp,
-  toHigherOrderComponent,
+  toHigherOrderComponent
 } from './ChainableComponent';
 import { withPromise, WithPromise } from './lib/withPromise';
 import { withState, WithState } from './lib/withState';
@@ -16,6 +17,9 @@ export {
   fromRender,
   toRenderProp,
   toHigherOrderComponent,
-  withState, WithState,
-  withPromise, WithPromise,
+  fromHigherOrderComponent,
+  withState,
+  WithState,
+  withPromise,
+  WithPromise
 };
