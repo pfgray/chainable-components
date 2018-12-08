@@ -13,9 +13,9 @@ type CountProps = {
   setCount: (n: number) => number
 };
 
-const foo = fromHigherOrderComponent<{foo: string}>(randomProps);
-const outerCount = fromHigherOrderComponent<CountProps>(count);
-const innerCount = fromHigherOrderComponent<CountProps>(count);
+const foo = fromHigherOrderComponent<{foo: string}>(randomProps as any);
+const outerCount = fromHigherOrderComponent<CountProps>(count as any);
+const innerCount = fromHigherOrderComponent<CountProps>(count as any);
 
 export const FromHoCDemo =
   ChainableComponent.all([
