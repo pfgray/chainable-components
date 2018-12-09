@@ -9,6 +9,7 @@ import {
 } from './ChainableComponent';
 import { withPromise, WithPromise } from './lib/withPromise';
 import { withState, WithState } from './lib/withState';
+import { withLifecycle, WithLifecycle } from './lib/withLifecycle';
 
 export {
   ChainableComponent,
@@ -21,5 +22,7 @@ export {
   withState,
   WithState,
   withPromise,
-  WithPromise
+  WithPromise,
+  withLifecycle,
+  WithLifecycle
 };
