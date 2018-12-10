@@ -1,6 +1,6 @@
 {
   "name": "chainable-components",
-  "version": "1.5.4",
+  "version": "1.5.5-alpha.1",
   "description": "",
   "license": "MIT",
   "main": "lib/index.js",
