@@ -3,4 +3,5 @@ node_modules/
 dist/
 .*.swp
 lib/
+!src/lib/
 yarn-error.log
