@@ -156,8 +156,8 @@ export function fromRenderProp<P extends ChildrenProp<A>, A>(
   Inner: React.ComponentType<P> | UnParameterizedRenderPropsComponent<A>,
   parameters?: Omit<P, 'children'>
 ): ChainableComponent<A> {
+  const apply = React.createFactory<P>(Inner as any);
   return fromRender(f => {
-    const apply = React.createFactory<P>(Inner as any);
     if (parameters) {
       return apply({
         ...(parameters as any), // todo: we have any until https://github.com/Microsoft/TypeScript/pull/13288 is merged
@@ -250,6 +250,28 @@ export function fromNonStandardRenderProp<P, A, S extends keyof P>(
       [renderMethod]: f
     });
   });
+}
+
+export function fromHook<Z>(hook: () => Z): () => ChainableComponent<Z>;
+export function fromHook<A, Z>(
+  hook: (a: A) => Z
+): (a: A) => ChainableComponent<Z>;
+export function fromHook<A, B, Z>(
+  hook: (a: A, b: B) => Z
+): (a: A, b: B) => ChainableComponent<Z>;
+export function fromHook<A, B, C, Z>(
+  hook: (a: A, b: B, c: C) => Z
+): (a: A, b: B, c: C) => ChainableComponent<Z>;
+export function fromHook<A, B, C, D, Z>(
+  hook: (a: A, b: B, c: C, d: D) => Z
+): (a: A, b: B, c: C, d: D) => ChainableComponent<Z>;
+export function fromHook(hook: any): any {
+  type FromHookProps = RenderPropsProps<{ args: any[] }, any>;
+  const FromHook: React.SFC<FromHookProps> = ({ children, args }) => {
+    console.log('invoking hook inside a functional component?!?', new Error());
+    return children(hook.apply(null, args)) as any;
+  };
+  return (...args: any[]) => fromRenderProp(FromHook, { args });
 }
 
 /**
