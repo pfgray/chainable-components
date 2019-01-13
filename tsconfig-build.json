@@ -1,16 +1,9 @@
 {
   "compilerOptions": {
     "noEmit": false,
-    "outDir": "lib",
+    "outDir": "dist",
     "rootDir": "src"
   },
-  "exclude": [
-    "demo",
-    "docs",
-    "lib",
-    "node_modules",
-    "test",
-    "webpack"
-  ],
+  "exclude": ["demo", "docs", "dist", "node_modules", "test", "webpack"],
   "extends": "./tsconfig.json"
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Step from '../Step';
-import { fromHigherOrderComponent, ChainableComponent } from '../../src/ChainableComponent';
+import { fromHigherOrderComponent, InferableHOC, ChainableComponent } from '../../src/ChainableComponent';
 import { withState, withProps } from 'recompose';
 
 const randomProps = withProps({
@@ -13,9 +13,13 @@ type CountProps = {
   setCount: (n: number) => number
 };
 
-const foo = fromHigherOrderComponent<{foo: string}>(randomProps);
-const outerCount = fromHigherOrderComponent<CountProps>(count);
-const innerCount = fromHigherOrderComponent<CountProps>(count);
+// typecast necessary here since InferableHOC is not compatible 
+//   with InferableComponetEnhancerWithProps from recompose (even thought they have the same shape!).
+// Chainable Components could just refer to the type from recompose, but that would add a compile
+//   dependency and would break for other hoc implementations.
+const foo = fromHigherOrderComponent<{foo: string}>(randomProps as InferableHOC<{foo: string}>)();
+const outerCount = fromHigherOrderComponent<CountProps>(count as InferableHOC<CountProps>)();
+const innerCount = fromHigherOrderComponent<CountProps>(count as InferableHOC<CountProps>)();
 
 export const FromHoCDemo =
   ChainableComponent.all([

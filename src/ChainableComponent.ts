@@ -8,7 +8,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /**
  * Represents a HoC, whose wrapped component props are inferable. 
  */
-interface InferableHOC<ProvidedProps> {
+export interface InferableHOC<ProvidedProps extends {}> {
   <B extends ProvidedProps>(
     c: React.ComponentType<B>,
   ): React.ComponentType<Omit<B, keyof ProvidedProps>>;
@@ -17,7 +17,7 @@ interface InferableHOC<ProvidedProps> {
 /**
  * Represents a HoC, whose wrapped component props are inferable. 
  */
-interface InferableHOCWithProps<ProvidedProps, NeededProps> {
+export interface InferableHOCWithProps<ProvidedProps, NeededProps> {
   <B extends ProvidedProps>(
     c: React.ComponentType<B>,
   ): React.ComponentType<Omit<B, keyof ProvidedProps> & NeededProps>;
@@ -194,12 +194,26 @@ type DummyRenderPropProps<A, B> = A & {
  * Converts a HigherOrderComponent to a ChainableComponent
  * @param hoc The HigherOrderComponent
  */
-export function fromHigherOrderComponent<P>(
-  hoc: InferableHOCWithProps<P, any>
-): ChainableComponent<P> {
-  const Dummy: React.SFC<DummyRenderPropProps<P, P>> = props => props.children(props) as React.ReactElement<any> | null;
-  const RenderPropComponent = hoc(Dummy);
-  return fromRenderProp(RenderPropComponent as any);
+export function fromHigherOrderComponent<P extends {}>(
+  hoc: InferableHOC<P>
+): () => ChainableComponent<P>
+export function fromHigherOrderComponent<P extends {}>(
+  hoc: InferableHOCWithProps<P, {}>
+): () => ChainableComponent<P>
+export function fromHigherOrderComponent<P extends {}, N extends {}>(
+  hoc: InferableHOCWithProps<P, N>
+): (n: N) => ChainableComponent<P> {
+  const Dummy: React.StatelessComponent<DummyRenderPropProps<P, P>> = props => props.children(props) as React.ReactElement<any> | null;
+  const RenderPropComponent = hoc(Dummy as any as React.ComponentType<P>);
+
+  const apply = React.createFactory<P>(RenderPropComponent as any as React.FunctionComponent<P>);
+  return (n) => fromRender(f => {
+    if(n) {
+      return apply({...(n as any), children:f});
+    } else {
+      return apply({children:f} as any);
+    }
+  });
 }
 
 /**
