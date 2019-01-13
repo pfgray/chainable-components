@@ -526,6 +526,10 @@ function DoRender(
   return doIt(a.map(a2 => [a2]), fns);
 }
 
+export const fork = <T>(f: () => React.ReactNode): ChainableComponent<T> => {
+  return fromRender(() => f())
+}
+
 const isChainableComponent = (a: any) => {
   return (
     typeof a.chain === 'function' &&
@@ -547,6 +551,7 @@ export const ChainableComponent = {
   'fantasyland/of': of,
   'fantasy-land/of': of,
   all,
+  fork,
   Do,
   DoRender
 };
