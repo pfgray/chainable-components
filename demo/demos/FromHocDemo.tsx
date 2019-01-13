@@ -9,8 +9,8 @@ const randomProps = withProps({
 
 const count = withState('count', 'setCount', 2);
 type CountProps = {
-  count: number,
-  setCount: (n: number) => number
+  count: number;
+  setCount: (n: number) => number;
 };
 
 // typecast necessary here since InferableHOC is not compatible 
@@ -21,23 +21,28 @@ const foo = fromHigherOrderComponent<{foo: string}>(randomProps as InferableHOC<
 const outerCount = fromHigherOrderComponent<CountProps>(count as InferableHOC<CountProps>)();
 const innerCount = fromHigherOrderComponent<CountProps>(count as InferableHOC<CountProps>)();
 
-export const FromHoCDemo =
-  ChainableComponent.all([
-    foo,
-    outerCount,
-    innerCount
-  ]).render(([foo, outer, inner]) => (
+export const FromHoCDemo = ChainableComponent.all([
+  foo,
+  outerCount,
+  innerCount
+]).render(([foo, outer, inner]) => (
+  <div>
+    {foo.foo}
     <div>
-      {foo.foo}
-      <div>Outer: {outer.count} <button onClick={() => outer.setCount(outer.count + 1)}>+</button></div>
-      <div>Inner: {inner.count} <button onClick={() => inner.setCount(inner.count + 1)}>+</button></div>
+      Outer: {outer.count}{' '}
+      <button onClick={() => outer.setCount(outer.count + 1)}>+</button>
     </div>
-  ))
+    <div>
+      Inner: {inner.count}{' '}
+      <button onClick={() => inner.setCount(inner.count + 1)}>+</button>
+    </div>
+  </div>
+));
 
 export default () => (
   <Step title="FromHoCDemo Demo">
-    <pre className='code-sample'>
-{`import { withState, withProps } from 'recompose';
+    <pre className="code-sample">
+      {`import { withState, withProps } from 'recompose';
 
 const randomProps = withProps({
   foo: 'bar'
