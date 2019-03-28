@@ -234,14 +234,9 @@ export function fromHigherOrderComponent<P extends {}, N extends {}>(
 }
 
 /**
- * Converts a Render Props Component into a function that can be used to build a ChainableComponent
- * Represents the type of a non standard render prop
- * @template P the props of the render prop component
- * @template A the type of the parameter of the render function
- * @template C the string of the key of the render function
+ * Extracts a parameter type from the render prop function.
  */
-type NonStandardRenderPropProps<P, A, C extends keyof P> = A &
-  { [K in C]: (a: P[K]) => React.ReactNode };
+type RenderPropContext<P, S extends keyof P> = P extends {[K in S]?: (a: infer U) => React.ReactNode} ? U : never;
 
 /**
  * Converts a Render Prop Component into a function that can be used to build a ChainableComponent
@@ -249,13 +244,13 @@ type NonStandardRenderPropProps<P, A, C extends keyof P> = A &
  * A "non-standard" render prop is any render prop that does not use the 'children' prop as the render method.
  * @param Inner the render prop component
  */
-export function fromNonStandardRenderProp<P, A, S extends keyof P>(
+export function fromNonStandardRenderProp<P, S extends keyof P>(
   renderMethod: S,
-  Inner: React.ComponentType<NonStandardRenderPropProps<P, A, S>>,
+  Inner: React.ComponentType<P>,
   parameters?: Omit<P, S>
-): ChainableComponent<A> {
+): ChainableComponent<RenderPropContext<P, S>> {
   return fromRender(f => {
-    const apply = React.createFactory<NonStandardRenderPropProps<P, A, S>>(
+    const apply = React.createFactory<P>(
       Inner as any
     );
     return apply({
@@ -266,7 +261,7 @@ export function fromNonStandardRenderProp<P, A, S extends keyof P>(
 }
 
 /**
- * Converts an apply function to a ChainableComponent
+ * Converts a render function to a ChainableComponent
  * @param render
  */
 export function fromRender<A>(
