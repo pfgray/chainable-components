@@ -303,6 +303,14 @@ export function fromRender<A>(
 
 type CC<A> = ChainableComponent<A>;
 
+
+type Unchained<A> = A extends ChainableComponent<infer U> ? U : never;
+type Unchainified<A> = { [K in keyof A]: Unchained<A[K]> };
+
+function allT<A extends ChainableComponent<any>[]>(...values: A): ChainableComponent<Unchainified<A>> {
+  return all(values) as unknown as ChainableComponent<Unchainified<A>>;
+}
+
 function all<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
   values: [
     CC<T1>,
@@ -546,6 +554,7 @@ export const ChainableComponent = {
   'fantasyland/of': of,
   'fantasy-land/of': of,
   all,
+  allT,
   fork,
   Do,
   DoRender
