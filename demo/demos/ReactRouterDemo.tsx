@@ -8,6 +8,9 @@ const customHistory = createBrowserHistory();
 
 const withRoute = fromRenderProp(Route);
 
+// how to use 'render' instead of 'children' (react router cares about this...)
+// const withOtherRoute = fromNonStandardRenderProp('render', Route)
+
 // Route doesn't have any required props, so we can just pass the empty object here
 const ReactRouterDemoInner: React.SFC = () => (
   <Step title="React Router Demo">
