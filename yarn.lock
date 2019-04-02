@@ -81,6 +81,10 @@
   version "10.3.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.5.tgz#8423cdf6e6fb83433e489900d7600d3b61c8260c"
 
+"@types/prop-types@*":
+  version "15.7.0"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.0.tgz#4c48fed958d6dcf9487195a0ef6456d5f6e0163a"
+
 "@types/ramda@^0.25.36":
   version "0.25.36"
   resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.25.36.tgz#1ddaf3211c7cd7046fcaefe68c713469ccfc9504"
@@ -105,10 +109,17 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.0.10":
+"@types/react@*":
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.1.tgz#c53bbfb4a78933db587da085ac60dbf5fcf73f8f"
   dependencies:
+    csstype "^2.2.0"
+
+"@types/react@^16.0.10":
+  version "16.8.10"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.10.tgz#1ccb6fde17f71a62ef055382ec68bdc379d4d8d9"
+  dependencies:
+    "@types/prop-types" "*"
     csstype "^2.2.0"
 
 "@types/recompose@^0.26.4":
@@ -2101,6 +2112,16 @@ formik@^0.11.11:
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
+
+fp-ts-contrib@^0.0.2:
+  version "0.0.2"
+  resolved "https://learningobjects.jfrog.io/learningobjects/api/npm/npm-virtual/fp-ts-contrib/-/fp-ts-contrib-0.0.2.tgz#95d3f5a3810020f8aea030bfcbd1efabbfb8124e"
+  dependencies:
+    fp-ts "^1.14.3"
+
+fp-ts@^1.14.3, fp-ts@^1.15.0:
+  version "1.15.0"
+  resolved "https://learningobjects.jfrog.io/learningobjects/api/npm/npm-virtual/fp-ts/-/fp-ts-1.15.0.tgz#7706d6761cc98ccbece91c2ff2e5a5b924f65f3d"
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -5540,9 +5561,9 @@ typescript@2.7.2:
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"
 
-typescript@^2.5.3:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+typescript@^3.4.0:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.1.tgz#b6691be11a881ffa9a05765a205cb7383f3b63c6"
 
 ua-parser-js@^0.7.18:
   version "0.7.18"
