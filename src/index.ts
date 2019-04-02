@@ -10,6 +10,7 @@ import {
 import { withPromise, WithPromise } from './lib/withPromise';
 import { withState, WithState } from './lib/withState';
 import { withLifecycle, WithLifecycle } from './lib/withLifecycle';
+import { chainableComponent, DoBuilder } from './lib/fpts';
 
 export {
   ChainableComponent,
@@ -24,5 +25,7 @@ export {
   withPromise,
   WithPromise,
   withLifecycle,
-  WithLifecycle
+  WithLifecycle,
+  chainableComponent,
+  DoBuilder
 };
