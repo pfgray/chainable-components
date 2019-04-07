@@ -1,6 +1,6 @@
 {
   "name": "chainable-components",
-  "version": "1.6.5",
+  "version": "1.7.0",
   "description": "",
   "license": "MIT",
   "main": "dist/index.js",
@@ -15,7 +15,7 @@
     "lint-fix": "tslint --project tsconfig-build.json --fix",
     "docs:gitbook": "gitbook build ./ docs",
     "docs:typedoc": "typedoc --module commonjs --out docs/typedoc/ src/",
-    "build": "npm-run-all clean build:ts build:dist docs:gitbook",
+    "build": "npm-run-all clean build:ts build:dist",
     "build:ts": "tsc -p tsconfig-build.json",
     "build:dist": "webpack --config webpack/bundle.ts",
     "clean": "rm -rf lib/",
@@ -65,12 +65,15 @@
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "typedoc": "^0.11.1",
-    "typescript": "^2.5.3",
+    "typescript": "^3.4.0",
     "webpack": "^4.0.0",
     "webpack-cli": "^3.0.3",
     "webpack-dev-server": "^3.1.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "fp-ts": "^1.15.0",
+    "fp-ts-contrib": "^0.0.2"
+  },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0"
   },

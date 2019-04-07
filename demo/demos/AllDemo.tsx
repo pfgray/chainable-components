@@ -4,14 +4,14 @@ import { ChainableComponent } from '../../src/ChainableComponent';
 import Step from '../Step';
 
 export const AllDemo =
-  ChainableComponent.all([
+  ChainableComponent.allT(
     withState('string value'),
     withState(1),
     withState(2),
     withState(3),
     withState(5),
     withState(8)
-  ])
+  )
   .render(([a, b, c, d, e, f]) => (
     <div>
       {/* a.value is inferred as a string */}
