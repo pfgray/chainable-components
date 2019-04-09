@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { fromRenderProp } from '../../src/ChainableComponent';
-// how to create a context hoc?
 import Step from '../Step';
+import { withContext } from '../../src/lib/withContext';
+import { withProvider } from '../../src/lib/withProvider';
 
 const { Consumer, Provider } = React.createContext("Default Value");
 
-const withContext = fromRenderProp(Consumer);
-
 const DisplayContext =
-  withContext.render(
+  withContext(Consumer).render(
     context => {
       return (
         <span>
@@ -19,40 +17,43 @@ const DisplayContext =
     }
   );
 
+const withText = withProvider(Provider)
+
 const ContextDemo = () => (
   <div>
     {DisplayContext}
     <Provider value="Overriden value">
       {DisplayContext}
     </Provider>
+    {withText("From withProvider").render(() => DisplayContext)}
   </div>
 );
 
 export default () => (
   <Step title="React 16 Context Demo">
     <pre className='code-sample'>
-      {`import { fromRenderProp } from 'chainable-components';
-const { Consumer, Provider } = React.createContext("Default Value");
-const withStringContext = fromRenderProp(Consumer);
+      {`const DisplayContext =
+  withContext(Consumer).render(
+    context => {
+      return (
+        <span>
+          Current context is:
+          <pre>{JSON.stringify(context, null, 2)}</pre>
+        </span>
+      );
+    }
+  );
 
-const DisplayContext =
-withStringContext({ children: a => '' }).render(
-  context => {
-    return (
-      <span>
-        Current context is:
-        <pre>{JSON.stringify(context, null, 2)}</pre>
-      </span>
-    );
-  }
+const withText = withProvider(Provider)
 
 const ContextDemo = () => (
-<div>
-  {DisplayContext}
-  <Provider value="Overriden value">
+  <div>
     {DisplayContext}
-  </Provider>
-</div>
+    <Provider value="Overriden value">
+      {DisplayContext}
+    </Provider>
+    {withText("From withProvider").render(() => DisplayContext)}
+  </div>
 );`}
     </pre>
     <ContextDemo />
