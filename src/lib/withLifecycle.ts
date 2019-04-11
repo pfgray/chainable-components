@@ -10,39 +10,69 @@ import {
  * Configuration for the withLifecycle chainable component
  */
 export type WithLifecycleOptions<C> = {
-  componentDidMount: () => C;
-  componentWillUnmount?: (c: C) => void;
+  init: () => C;
+  componentDidMount?: (c: C) => C;
+  componentWillUnmount?: (c: C) => C;
+  deriveContext?: (c:C) => C;
+  componentWillUpdate?: (c: C) => C;
   shouldComponentUpdate?: (c: C) => boolean;
 };
 
-type WithLifecycleProps<C> = RenderPropsProps<WithLifecycleOptions<C>, {}>;
+type WithLifecycleProps<C> = RenderPropsProps<WithLifecycleOptions<C>, C>;
+
+const iff = <A>(a: A | undefined, f: (a:A) => void): void => a && f(a)
+
+const fold = <A, Z>(z: Z, a: A | undefined, f: (a:A) => Z): Z => a ? f(a) : z
 
 /**
  * A Render Prop component that mimics the react Component API
  */
 export class WithLifecycle<C> extends React.Component<
   WithLifecycleProps<C>,
-  {}
+  { context: C }
 > {
   constructor(props: WithLifecycleProps<C>) {
     super(props);
+    this.state = {
+      context: this.props.init()
+    }
+  }
+
+  static getDerivedStateFromProps<C>(nextProps: WithLifecycleProps<C>, state: { context: C }) {
+    return nextProps.deriveContext ? { context: nextProps.deriveContext(state.context) } : state
   }
 
   componentDidMount() {
-    this.context = this.props.componentDidMount();
+    iff(this.props.componentDidMount, dm => {
+      this.setState(s => {
+        context: dm(s.context)
+      })
+    })
   }
+
   componentWillUnmount() {
-    this.props.componentWillUnmount &&
-      this.props.componentWillUnmount(this.context);
+    iff(this.props.componentWillUnmount, wu => {
+      this.setState(s => {
+        context: wu(s.context)
+      })
+    })
   }
   shouldComponentUpdate() {
-    return this.props.shouldComponentUpdate
-      ? this.props.shouldComponentUpdate(this.context)
-      : true;
+    return fold(true, this.props.shouldComponentUpdate, scu => {
+      return scu(this.state.context)
+    })
+  }
+
+  UNSAFE_componentWillUpdate(nextProps: WithLifecycleProps<C>) {
+    iff(nextProps.componentWillUpdate, wu => {
+      this.setState(s => {
+        context: wu(s.context)
+      })
+    })
   }
 
   render() {
-    return this.props.children({});
+    return this.props.children(this.state.context);
   }
 }
 
@@ -52,6 +82,6 @@ export class WithLifecycle<C> extends React.Component<
  */
 export function withLifecycle<C>(
   options: WithLifecycleOptions<C>
-): ChainableComponent<{}> {
+): ChainableComponent<C> {
   return fromRenderProp<WithLifecycleProps<C>>(WithLifecycle, options);
 }
