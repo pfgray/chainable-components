@@ -56,7 +56,7 @@
     "ramda": "^0.25.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-hot-loader": "3.0.0",
+    "react-hot-loader": "^4.8.4",
     "react-router": "^4.2.0",
     "recompose": "^0.28.2",
     "source-map-loader": "^0.2.2",
