@@ -20,16 +20,13 @@
     "build:dist": "webpack --config webpack/bundle.ts",
     "clean": "rm -rf lib/",
     "start": "webpack-dev-server --config webpack/hot.ts",
-    "test": "npm-run-all build test:lint test:unit",
-    "test:circle": "npm-run-all build test:lint test:unit:circle",
-    "test:lint": "tslint --project tsconfig-build.json",
-    "test:unit": "mocha --opts test/mocha.opts 'test/*.ts'",
-    "test:unit:circle": "mocha --opts test/mocha.opts --reporter mocha-junit-reporter 'test/*.ts'",
+    "test": "jest",
     "version": "git add -A docs/"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
     "@types/html-webpack-plugin": "^2.30.3",
+    "@types/jest": "^24.0.13",
     "@types/mocha": "^2.2.43",
     "@types/ramda": "^0.25.36",
     "@types/react": "^16.0.10",
@@ -46,6 +43,7 @@
     "history": "^4.7.2",
     "html-loader": "^0.5.1",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.8.0",
     "jsdom": "^11.3.0",
     "jsdom-global": "^3.0.2",
     "less": "^3.0.0-alpha.3",
@@ -55,12 +53,13 @@
     "npm-run-all": "^4.1.1",
     "ramda": "^0.25.0",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.4",
     "react-router": "^4.2.0",
     "recompose": "^0.28.2",
     "source-map-loader": "^0.2.2",
     "style-loader": "^0.19.0",
+    "ts-jest": "^24.0.2",
     "ts-loader": "^4.0.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
@@ -71,8 +70,10 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
+    "@types/react-test-renderer": "^16.8.1",
     "fp-ts": "^1.15.0",
-    "fp-ts-contrib": "^0.0.2"
+    "fp-ts-contrib": "^0.0.2",
+    "react-test-renderer": "^16.8.6"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0"
