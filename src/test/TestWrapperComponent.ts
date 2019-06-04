@@ -25,10 +25,10 @@ export class TestWrapperComponent<T> extends React.Component<
       this.addRender(values);
       const [next] = this.effectsLeft.splice(0, 1);
       const done = this.effectsLeft.length === 0;
-      this.nextEffect = () => {
+      this.nextEffect = next ? () => {
         next(values);
         return done;
-      };
+      } : () => true;
       return null;
     });
   }

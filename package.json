@@ -20,7 +20,7 @@
     "build:dist": "webpack --config webpack/bundle.ts",
     "clean": "rm -rf lib/",
     "start": "webpack-dev-server --config webpack/hot.ts",
-    "test": "jest",
+    "test": "jest --coverage",
     "version": "git add -A docs/"
   },
   "devDependencies": {

@@ -4,3 +4,4 @@ dist/
 .*.swp
 yarn-error.log
 .vscode/
+coverage/

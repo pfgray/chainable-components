@@ -1,11 +1,8 @@
+import { Do } from 'fp-ts-contrib/lib/Do';
 import { ChainableComponent } from '..';
-import * as React from 'react';
-import { chainableComponent } from './../lib/fpts';
 import { withHandler } from '../lib/withHandler';
 import { withState } from '../lib/withState';
-import { Do } from 'fp-ts-contrib/lib/Do';
-import * as TestRenderer from 'react-test-renderer';
-import { TestWrapperComponent } from './TestWrapperComponent';
+import { chainableComponent } from './../lib/fpts';
 import { testing } from './testBuilder';
 
 type Inner<T> = T extends ChainableComponent<infer U> ? U : never;
@@ -18,7 +15,7 @@ test('adds 1 + 2 to equal 3', () => {
       .bindL('handler', ({ inner }) => {
         return withHandler(() => {
           console.log('inner count is:', inner.value)
-        }, [inner.value]) // handler depends in inner.value
+        }, [inner.value]) // handler depends on inner.value
       })
       .done();
 
@@ -31,5 +28,5 @@ test('adds 1 + 2 to equal 3', () => {
       // but it does change from render2 to render3
       expect(render2.handler).not.toBe(render3.handler)
     })
-  
+
 });
