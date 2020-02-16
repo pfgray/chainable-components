@@ -21,6 +21,7 @@
     "clean": "rm -rf lib/",
     "start": "webpack-dev-server --config webpack/hot.ts",
     "test": "jest --coverage",
+    "testOne": "jest",
     "version": "git add -A docs/"
   },
   "devDependencies": {

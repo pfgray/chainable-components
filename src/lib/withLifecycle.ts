@@ -63,13 +63,13 @@ export class WithLifecycle<C> extends React.Component<
     })
   }
 
-  UNSAFE_componentWillUpdate(nextProps: WithLifecycleProps<C>) {
-    iff(nextProps.componentWillUpdate, wu => {
-      this.setState(s => {
-        context: wu(s.context)
-      })
-    })
-  }
+  // UNSAFE_componentWillUpdate(nextProps: WithLifecycleProps<C>) {
+  //   iff(nextProps.componentWillUpdate, wu => {
+  //     this.setState(s => {
+  //       context: wu(s.context)
+  //     })
+  //   })
+  // }
 
   render() {
     return this.props.children(this.state.context);

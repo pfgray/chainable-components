@@ -4,7 +4,7 @@ import { ChainableComponent } from '..';
 import { withHandler } from '../lib/withHandler';
 import { withState } from '../lib/withState';
 import { chainableComponent } from './../lib/fpts';
-import { testing } from '../test/testBuilder';
+import { testing } from '../test2/testBuilder';
 import { withContext } from './withContext';
 import { withProvider } from './withProvider';
 

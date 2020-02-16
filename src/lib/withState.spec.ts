@@ -1,5 +1,5 @@
 import { withState } from '../lib/withState';
-import { testing } from '../test/testBuilder';
+import { testing } from '../test2/testBuilder';
 
 describe('withState', () => {
   test('stores values and updates', () => {

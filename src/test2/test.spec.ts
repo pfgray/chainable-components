@@ -1,11 +1,8 @@
 import { Do } from 'fp-ts-contrib/lib/Do';
-import { ChainableComponent } from '..';
 import { withHandler } from '../lib/withHandler';
 import { withState } from '../lib/withState';
-import { chainableComponent } from './../lib/fpts';
+import { chainableComponent } from '../lib/fpts';
 import { testing } from './testBuilder';
-
-type Inner<T> = T extends ChainableComponent<infer U> ? U : never;
 
 test('adds 1 + 2 to equal 3', () => {
   const underTest =
@@ -19,7 +16,7 @@ test('adds 1 + 2 to equal 3', () => {
       })
       .done();
 
-  testing(underTest)
+  return testing(underTest)
     .effect(p => p.outer.update(1)) // handler doesn't depend on outer, so the ref shouldn't change
     .effect(p => p.inner.update(1)) // handler does depend on inner, so handler's reference should change
     .test(function(render1, render2, render3) {

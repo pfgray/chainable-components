@@ -12,7 +12,8 @@
     "target": "es5",
     "sourceMap": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["es2015", "dom"]
   },
   "exclude": ["docs", "dist", "node_modules"]
 }
