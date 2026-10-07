@@ -157,14 +157,13 @@ export function fromRenderProp<P extends ChildrenProp<A>, A>(
   parameters?: Omit<P, 'children'>
 ): ChainableComponent<A> {
   return fromRender(f => {
-    const apply = React.createFactory<P>(Inner as any);
     if (parameters) {
-      return apply({
+      return React.createElement(Inner as any, {
         ...(parameters as any), // todo: we have any until https://github.com/Microsoft/TypeScript/pull/13288 is merged
         children: f
       });
     } else {
-      return apply({
+      return React.createElement(Inner as any, {
         children: f
       } as any);
     }
@@ -220,15 +219,14 @@ export function fromHigherOrderComponent<P extends {}>(
 export function fromHigherOrderComponent<P extends {}, N extends {}>(
   hoc: InferableHOCWithProps<P, N>
 ): (n: N) => ChainableComponent<P> {
-  const Dummy: React.StatelessComponent<DummyRenderPropProps<P, P>> = props => props.children(props) as React.ReactElement<any> | null;
+  const Dummy: React.FC<DummyRenderPropProps<P, P>> = props => props.children(props) as React.ReactElement<any> | null;
   const RenderPropComponent = hoc(Dummy as any as React.ComponentType<P>);
 
-  const apply = React.createFactory<P>(RenderPropComponent as any as React.FunctionComponent<P>);
   return (n) => fromRender(f => {
     if(n) {
-      return apply({...(n as any), children:f});
+      return React.createElement(RenderPropComponent as any, {...(n as any), children:f});
     } else {
-      return apply({children:f} as any);
+      return React.createElement(RenderPropComponent as any, {children:f} as any);
     }
   });
 }
@@ -250,10 +248,7 @@ export function fromNonStandardRenderProp<P, S extends keyof P>(
   parameters?: Omit<P, S>
 ): ChainableComponent<RenderPropContext<P, S>> {
   return fromRender(f => {
-    const apply = React.createFactory<P>(
-      Inner as any
-    );
-    return apply({
+    return React.createElement(Inner as any, {
       ...(parameters as any),
       [renderMethod]: f
     });
@@ -466,25 +461,25 @@ function Do(
   return doIt(a.map(a2 => [a2]), fns);
 }
 
-function DoRender<T1, Z>(
+function DoRender<T1, _Z = unknown>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => React.ReactNode
 ): React.ReactNode;
 
-function DoRender<T1, T2, Z>(
+function DoRender<T1, T2, _Z = unknown>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
   z: (t2: T2, t1: T1) => React.ReactNode
 ): React.ReactNode;
 
-function DoRender<T1, T2, T3, Z>(
+function DoRender<T1, T2, T3, _Z = unknown>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
   f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
   z: (t3: T3, t2: T2, t1: T1) => React.ReactNode
 ): React.ReactNode;
 
-function DoRender<T1, T2, T3, T4, Z>(
+function DoRender<T1, T2, T3, T4, _Z = unknown>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
   f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
@@ -492,7 +487,7 @@ function DoRender<T1, T2, T3, T4, Z>(
   z: (t4: T4, t3: T3, t2: T2, t1: T1) => React.ReactNode
 ): React.ReactNode;
 
-function DoRender<T1, T2, T3, T4, T5, Z>(
+function DoRender<T1, T2, T3, T4, T5, _Z = unknown>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
   f2: (t2: T2, t1: T1) => ChainableComponent<T3>,
@@ -501,7 +496,7 @@ function DoRender<T1, T2, T3, T4, T5, Z>(
   z: (t5: T5, t4: T4, t3: T3, t2: T2, t1: T1) => React.ReactNode
 ): React.ReactNode;
 
-function DoRender<T1, T2, T3, T4, T5, T6, Z>(
+function DoRender<T1, T2, T3, T4, T5, T6, _Z = unknown>(
   c: ChainableComponent<T1>,
   f1: (t1: T1) => ChainableComponent<T2>,
   f2: (t2: T2, t1: T1) => ChainableComponent<T3>,

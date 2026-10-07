@@ -12,7 +12,7 @@ const withRoute = fromRenderProp(Route);
 // const withOtherRoute = fromNonStandardRenderProp('render', Route)
 
 // Route doesn't have any required props, so we can just pass the empty object here
-const ReactRouterDemoInner: React.SFC = () => (
+const ReactRouterDemoInner: React.FC = () => (
   <Step title="React Router Demo">
     <pre className='code-sample'>
       {`import { Route } from 'react-router';
@@ -29,6 +29,7 @@ withRoute.render(
   }
 )`}
     </pre>
+    {/* @ts-ignore - Router children prop compatibility issue with old react-router version */}
     <Router history={customHistory}>
       {withRoute.render(
         route => {

@@ -3,12 +3,10 @@ import { fromRender } from '../../src/ChainableComponent';
 import Step from '../Step';
 
 export const FromRenderDemo =
-  fromRender((render: (a: number) => React.ReactNode) => (
-    function () {
-      return <div>Rendered: {render(5)}</div>
-    }
-  ))
-  .render(a => (
+  fromRender((render: (a: number) => React.ReactNode): React.ReactNode => {
+    return <div>Rendered: {render(5)}</div>
+  })
+  .render((a: number) => (
     <div>test: {a}</div>
   ));
 

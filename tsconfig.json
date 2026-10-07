@@ -1,18 +1,23 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "target": "es2020",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "moduleResolution": "bundler",
     "declaration": true,
-    "forceConsistentCasingInFileNames": true,
+    "declarationMap": true,
+    "sourceMap": true,
     "jsx": "react",
-    "noEmit": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "noUnusedLocals": false,
     "noUnusedParameters": true,
-    "target": "es5",
-    "sourceMap": true,
-    "strict": true,
-    "skipLibCheck": true
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
   "exclude": ["docs", "dist", "node_modules"]
 }

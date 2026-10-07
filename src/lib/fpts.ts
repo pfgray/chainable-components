@@ -1,14 +1,12 @@
-import { Monad1 } from "fp-ts/lib/Monad";
-import { HKT } from 'fp-ts/lib/HKT';
+import { Monad1 } from "fp-ts/Monad";
 import { ChainableComponent } from "..";
-import { Do } from 'fp-ts-contrib/lib/Do';
 
 export const URI = "ChainableComponent";
 export type URI = typeof URI;
 
-declare module "fp-ts/lib/HKT" {
-  interface URI2HKT<A> {
-    ChainableComponent: ChainableComponent<A>;
+declare module "fp-ts/HKT" {
+  interface URItoKind<A> {
+    readonly [URI]: ChainableComponent<A>;
   }
 }
 
@@ -27,5 +25,3 @@ export const chainableComponent: Monad1<URI> = {
     return fa.chain(f)
   }
 };
-
-export const DoBuilder = Do(chainableComponent)

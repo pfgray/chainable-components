@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "noEmit": false,
-    "outDir": "dist",
-    "rootDir": "src"
-  },
-  "exclude": ["demo", "docs", "dist", "node_modules", "test", "webpack"],
-  "extends": "./tsconfig.json"
-}

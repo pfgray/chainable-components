@@ -4,3 +4,9 @@ dist/
 .*.swp
 yarn-error.log
 .vscode/
+.eslintcache
+
+# Nix
+.direnv/
+result
+result-*

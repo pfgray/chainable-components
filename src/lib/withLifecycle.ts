@@ -1,4 +1,3 @@
-import { WithLifecycleOptions } from './withLifecycle';
 import * as React from 'react';
 import {
   ChainableComponent,
@@ -24,20 +23,23 @@ export class WithLifecycle<C> extends React.Component<
   WithLifecycleProps<C>,
   {}
 > {
+  private lifecycleContext?: C;
+
   constructor(props: WithLifecycleProps<C>) {
     super(props);
   }
 
   componentDidMount() {
-    this.context = this.props.componentDidMount();
+    this.lifecycleContext = this.props.componentDidMount();
   }
   componentWillUnmount() {
-    this.props.componentWillUnmount &&
-      this.props.componentWillUnmount(this.context);
+    if (this.lifecycleContext && this.props.componentWillUnmount) {
+      this.props.componentWillUnmount(this.lifecycleContext);
+    }
   }
   shouldComponentUpdate() {
-    return this.props.shouldComponentUpdate
-      ? this.props.shouldComponentUpdate(this.context)
+    return this.props.shouldComponentUpdate && this.lifecycleContext
+      ? this.props.shouldComponentUpdate(this.lifecycleContext)
       : true;
   }
 
