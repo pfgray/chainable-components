@@ -46,8 +46,7 @@
     "test:unit": "mocha",
     "test:unit:circle": "mocha --reporter mocha-junit-reporter",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build:lib",
-    "version": "git add -A docs/"
+    "prepublishOnly": "npm run build:lib"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

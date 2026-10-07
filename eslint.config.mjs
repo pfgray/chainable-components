@@ -4,7 +4,7 @@ import reactPlugin from 'eslint-plugin-react';
 
 export default [
   {
-    ignores: ['dist/', 'docs/', 'node_modules/', 'demo/webpack/', '**/*.js', '**/*.d.ts']
+    ignores: ['dist/', 'node_modules/', 'demo/webpack/', '**/*.js', '**/*.d.ts']
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,

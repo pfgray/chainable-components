@@ -5,6 +5,5 @@
 circle.yml
 tsconfig*.json
 demo/
-docs/
 webpack/
 yarn.lock
